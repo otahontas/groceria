@@ -8,5 +8,11 @@ Plain and simple self-hostable groceries web app, built with react and typescrip
 - Optionally password protection for page
 - Easy deployment to VPS with Docker
 
+## Usage
+- Installation: yarn install
+- Starting: yarn start
+- Testing: yarn test
+- Building: yarn build
+
 ## Licence
 MIT
