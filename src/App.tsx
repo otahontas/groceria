@@ -1,5 +1,21 @@
 import React from 'react';
 import {
+  CssBaseline,
+  Container,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemAvatar,
+  ListItemSecondaryAction,
+  IconButton,
+} from '@material-ui/core';
+import FolderIcon from "@material-ui/icons/Folder"
+import DeleteIcon from '@material-ui/icons/Delete';
+import Checkbox from '@material-ui/core/Checkbox';
+import EditIcon from '@material-ui/icons/Edit'
+
+import {
   atom,
   useRecoilValue,
   useRecoilState,
@@ -44,15 +60,25 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
   };
 
   return (
-    <div>
-      <input type="text" value={item.text} onChange={editItemText}/>
-      <input
-        type="checkbox"
-        checked={item.isComplete}
-        onChange={toggleItemCompletion}
+    <ListItem>
+      <ListItemIcon onClick={toggleItemCompletion}>
+        <Checkbox
+          edge="start"
+          checked={item.isComplete}
+          tabIndex={-1}
+          disableRipple
+        />
+      </ListItemIcon>
+      <ListItemText
+        style={{ textDecoration : item.isComplete? 'line-through' : 'none' }}
+        primary={item.text}
       />
-      <button onClick={deleteItem}>X</button>
-    </div>
+      <ListItemSecondaryAction>
+        <IconButton edge="end" aria-label="edit">
+          <EditIcon/>
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
   );
 }
 
@@ -78,7 +104,7 @@ const todoListState = atom({
       isComplete: false
     },
     {
-      id: 2,
+      id: 3,
       text: "Mehuiza",
       isComplete: false
     }
@@ -90,11 +116,16 @@ function App() {
   const todoList = useRecoilValue(todoListState)
 
   return (
-    <div>
-      {todoList.map((todoItem: TodoItem) => (
-        <TodoItem key={todoItem.id} item={todoItem}/>
-      ))}
-    </div>
+    <React.Fragment>
+      <CssBaseline/>
+      <Container maxWidth="sm">
+        <List>
+          {todoList.map((todoItem: TodoItem) => (
+            <TodoItem key={todoItem.id} item={todoItem}/>
+          ))}
+        </List>
+      </Container>
+    </React.Fragment>
   );
 }
 
