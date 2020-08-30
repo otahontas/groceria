@@ -8881,6 +8881,11 @@ react-scripts@3.4.3:
   optionalDependencies:
     fsevents "2.1.2"
 
+react-tiny-flip@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-tiny-flip/-/react-tiny-flip-0.2.2.tgz#4f92ca4ef01169dd2d25cb759fa7203e35f326ec"
+  integrity sha512-p2TfGoS7P5FpPR0FyRXIp4AWkWFrERCGZwuyhS3G41uGkVTv7BI2WFfAExUAIH3arR4/1Kqqb65yrGyBCEgkeg==
+
 react-transition-group@^4.4.0:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.1.tgz#63868f9325a38ea5ee9535d828327f85773345c9"

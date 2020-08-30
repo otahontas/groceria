@@ -7,15 +7,13 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListItemAvatar,
   ListItemSecondaryAction,
   IconButton,
   Paper
 } from '@material-ui/core';
-import FolderIcon from "@material-ui/icons/Folder"
-import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 import EditIcon from '@material-ui/icons/Edit'
+import Flip from "react-tiny-flip";
 
 import {
   atom,
@@ -49,6 +47,7 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
       ...item,
       isComplete: !item.isComplete,
     });
+    newList.sort((a, b) => (a.isComplete === b.isComplete) ? 0 : a.isComplete ? 1 : -1);
 
     // @ts-ignore
     setTodoList(newList);
@@ -72,7 +71,7 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
         />
       </ListItemIcon>
       <ListItemText
-        style={{ textDecoration : item.isComplete? 'line-through' : 'none' }}
+        style={{textDecoration: item.isComplete ? 'line-through' : 'none'}}
         primary={item.text}
       />
       <ListItemSecondaryAction>
@@ -122,14 +121,16 @@ function App() {
       <CssBaseline/>
       <Container maxWidth="sm">
         <Paper>
-        <List>
-          {todoList.map((todoItem: TodoItem) => (
-            <div>
-              <TodoItem key={todoItem.id} item={todoItem}/>
-              {todoItem !== todoList[todoList.length -1] && <Divider />}
-            </div>
-          ))}
-        </List>
+          <List>
+            <Flip>
+            {todoList.map((todoItem: TodoItem) => (
+              <div key={todoItem.id}>
+                <TodoItem item={todoItem}/>
+                {todoItem !== todoList[todoList.length - 1] ? <Divider/> : null}
+              </div>
+            ))}
+            </Flip>
+          </List>
         </Paper>
       </Container>
     </React.Fragment>
