@@ -2,6 +2,7 @@ import React from 'react';
 import {
   CssBaseline,
   Container,
+  Divider,
   List,
   ListItem,
   ListItemIcon,
@@ -9,6 +10,7 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   IconButton,
+  Paper
 } from '@material-ui/core';
 import FolderIcon from "@material-ui/icons/Folder"
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -119,11 +121,16 @@ function App() {
     <React.Fragment>
       <CssBaseline/>
       <Container maxWidth="sm">
+        <Paper>
         <List>
           {todoList.map((todoItem: TodoItem) => (
-            <TodoItem key={todoItem.id} item={todoItem}/>
+            <div>
+              <TodoItem key={todoItem.id} item={todoItem}/>
+              {todoItem !== todoList[todoList.length -1] && <Divider />}
+            </div>
           ))}
         </List>
+        </Paper>
       </Container>
     </React.Fragment>
   );
