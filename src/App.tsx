@@ -9,9 +9,12 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   IconButton,
-  Paper
+  Paper,
+  Fab,
+  Checkbox
 } from '@material-ui/core';
-import Checkbox from '@material-ui/core/Checkbox';
+import { makeStyles } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit'
 import Flip from "react-tiny-flip";
 
@@ -26,6 +29,14 @@ interface TodoItem {
   text: string,
   isComplete: boolean
 }
+
+const useStyles = makeStyles((theme) => ({
+  fab: {
+    display: "flex", 
+    justifyContent: "flex-end",
+    padding: theme.spacing(2)
+  }
+}))
 
 const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
   const [todoList, setTodoList] = useRecoilState(todoListState);
@@ -115,6 +126,7 @@ const todoListState = atom({
 
 function App() {
   const todoList = useRecoilValue(todoListState)
+  const classes = useStyles();
 
   return (
     <React.Fragment>
@@ -126,11 +138,16 @@ function App() {
             {todoList.map((todoItem: TodoItem) => (
               <div key={todoItem.id}>
                 <TodoItem item={todoItem}/>
-                {todoItem !== todoList[todoList.length - 1] ? <Divider/> : null}
+                <Divider />
               </div>
             ))}
             </Flip>
           </List>
+          <div className={classes.fab}>
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+          </div>
         </Paper>
       </Container>
     </React.Fragment>
