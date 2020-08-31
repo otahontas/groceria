@@ -8,6 +8,7 @@ authors = ["Otto Ahoniemi <otto@ottoahoniemi.fi>"]
 python = "^3.8"
 fastapi = "^0.61.1"
 uvicorn = "^0.11.8"
+aiofiles = "^0.5.0"
 
 [tool.poetry.dev-dependencies]
 
