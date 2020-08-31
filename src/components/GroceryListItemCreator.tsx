@@ -40,7 +40,11 @@ export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggl
   const classes = useStyles();
 
   const addItem = (todo: Item) => {
-    setTodoList((oldTodoList: Item[]) => [...oldTodoList, todo]);
+    setTodoList((oldTodoList: Item[]) => {
+      const newList = [...oldTodoList, todo];
+      newList.sort((a, b) => (a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1));
+      return newList;
+    });
   };
 
   return (
@@ -50,7 +54,7 @@ export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggl
       }}
       validate={values => {
         const errors: Partial<ItemFormValues> = {};
-        if (!values.text) errors.text = "Grocery can't be empty";
+        if (!values.text) errors.text = "Item can't be empty";
         return errors;
       }}
       onSubmit={values => {
@@ -74,8 +78,8 @@ export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggl
                 type="text"
                 variant="outlined"
                 fullWidth
-                placeholder="Add new grocery"
-                inputProps={{ "aria-label": "add new grocery" }}
+                placeholder="Add new item"
+                inputProps={{ "aria-label": "add new item" }}
                 className={classes.input}
               />
               <Divider orientation="vertical" className={classes.divider} />

@@ -1,23 +1,10 @@
 import { atom } from "recoil";
-import { v4 as uuid } from "uuid";
+
+import { Item } from "../types";
+
+const initialList: Item[] = [];
 
 export const todoListState = atom({
   key: "todoListState",
-  default: [
-    {
-      id: uuid(),
-      text: "Maituli",
-      isComplete: false,
-    },
-    {
-      id: uuid(),
-      text: "Saippua",
-      isComplete: false,
-    },
-    {
-      id: uuid(),
-      text: "Mehuiza",
-      isComplete: false,
-    },
-  ],
+  default: initialList,
 });

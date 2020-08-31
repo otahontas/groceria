@@ -26,7 +26,8 @@ const useStyles = makeStyles(theme => ({
     zIndex: 2,
     display: "flex",
     justifyContent: "flex-end",
-    marginTop: `-${theme.spacing(4)}px`,
+    transform: "translateY(-50%)",
+    marginBottom: `-${theme.spacing(4)}px`,
   },
 }));
 
@@ -41,9 +42,7 @@ const App: React.FC = () => {
       <CssBaseline />
       <AppBar className={classes.appbar}>
         <Toolbar className={classes.toolbar}>
-          <Typography variant="h6">
-            Groceries
-          </Typography>
+          <Typography variant="h6">Groceries</Typography>
         </Toolbar>
       </AppBar>
       <Container component="main" maxWidth="sm">

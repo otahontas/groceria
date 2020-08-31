@@ -16,7 +16,7 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const index = todoList.findIndex(listItem => listItem === item);
 
-  const editItemText = (text: string) => {
+  const editItem = (text: string) => {
     const newList = replaceItemAtIndex(todoList, index, {
       ...item,
       text,
@@ -33,11 +33,6 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
     setTodoList(newList);
   };
 
-  // const deleteItem = () => {
-  //   const newList = removeItemAtIndex(todoList, index);
-  //   setTodoList(newList);
-  // };
-
   return (
     <ListItem>
       <ListItemIcon onClick={toggleItemCompletion}>
@@ -51,11 +46,11 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
             }}
             validate={values => {
               const errors: Partial<ItemFormValues> = {};
-              if (!values.text) errors.text = "Grocery can't be empty";
+              if (!values.text) errors.text = "Item can't be empty";
               return errors;
             }}
             onSubmit={values => {
-              editItemText(values.text);
+              editItem(values.text);
               setEditMode(false);
             }}
           >
@@ -66,7 +61,7 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
                   <IconButton edge="end" aria-label="save" onClick={submitForm}>
                     <SaveIcon />
                   </IconButton>
-                  <IconButton edge="end" aria-label="cencel edit" onClick={() => setEditMode(false)}>
+                  <IconButton edge="end" aria-label="cancel edit" onClick={() => setEditMode(false)}>
                     <CloseIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
@@ -91,7 +86,3 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
 function replaceItemAtIndex(arr: Item[], index: number, newValue: Item) {
   return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 }
-
-// function removeItemAtIndex(arr: TodoItem[], index: number) {
-//   return [...arr.slice(0, index), ...arr.slice(index + 1)];
-// }
