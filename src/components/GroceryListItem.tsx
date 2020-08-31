@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { Checkbox, IconButton, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import { Field, Form, Formik } from "formik";
@@ -47,6 +48,16 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
     }
   };
 
+  const deleteItem = async () => {
+    const response = await grocecyListService.remove(item.id);
+    if (response.ok) {
+      const newList = removeItemAtIndex(groceryList, index);
+      setGroceryList(newList);
+    } else {
+      setSnackbarMessage("Error happened while toggling deleting item, please try again");
+    }
+  };
+
   return (
     <ListItem>
       <ListItemIcon onClick={toggleItemCompletion}>
@@ -87,6 +98,11 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
         <div>
           <ListItemText style={{ textDecoration: item.isComplete ? "line-through" : "none" }} primary={item.text} />
           <ListItemSecondaryAction>
+            {item.isComplete ? (
+              <IconButton edge="end" aria-label="edit" onClick={() => deleteItem()}>
+                <DeleteForeverIcon />
+              </IconButton>
+            ) : null}
             <IconButton edge="end" aria-label="edit" onClick={() => setEditMode(true)}>
               <EditIcon />
             </IconButton>
@@ -99,4 +115,7 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
 
 function replaceItemAtIndex(arr: Item[], index: number, newValue: Item) {
   return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
+}
+function removeItemAtIndex(arr: Item[], index: number) {
+  return [...arr.slice(0, index), ...arr.slice(index + 1)];
 }

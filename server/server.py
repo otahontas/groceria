@@ -1,6 +1,6 @@
 import aiofiles
 import json
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
@@ -51,7 +51,8 @@ async def create_item(item: Item):
     data.append(item.dict())
     if not await write_file(data):
         raise HTTPException(
-            status_code=400, detail="Error happened while writing items to file"
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Error happened while writing items to file",
         )
     return item
 
@@ -60,25 +61,26 @@ async def create_item(item: Item):
 async def replace_item(item_id: str, item: Item):
     data = await open_file()
     if not any(x["id"] == item_id for x in data):
-        raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
 
     data = [item.dict() if x["id"] == item_id else x for x in data]
     if not await write_file(data):
         raise HTTPException(
-            status_code=400, detail="Error happened while writing items to file"
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Error happened while writing items to file",
         )
     return item
 
 
-@app.delete("/api/items/{item_id}")
+@app.delete("/api/items/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_item(item_id: str):
     data = await open_file()
     if not any(x["id"] == item_id for x in data):
-        raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
 
-    data = list(filter(lambda x: x["id"] == item_id, data))
+    data = list(filter(lambda x: x["id"] != item_id, data))
     if not await write_file(data):
         raise HTTPException(
-            status_code=400, detail="Error happened while writing items to file"
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Error happened while writing items to file",
         )
-    return item
