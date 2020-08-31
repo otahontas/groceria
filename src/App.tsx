@@ -16,14 +16,14 @@ import {
   Checkbox,
   Typography
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel'
 import EditIcon from '@material-ui/icons/Edit'
 import Flip from "react-tiny-flip";
-import { Formik, Form, Field } from 'formik';
-import { TextField } from 'formik-material-ui';
+import {Formik, Form, Field} from 'formik';
+import {TextField} from 'formik-material-ui';
 
 import {
   atom,
@@ -41,14 +41,20 @@ type Values = Pick<TodoItem, 'text'>;
 
 
 const useStyles = makeStyles((theme) => ({
+  appbar: {
+    position: "relative",
+    zIndex: 1,
+  },
   toolbar: {
     display: "flex",
     justifyContent: "center",
   },
   fab: {
-    display: "flex", 
+    position: "relative",
+    zIndex: 2,
+    display: "flex",
     justifyContent: "flex-end",
-    padding: theme.spacing(2)
+    marginTop: `-${theme.spacing(4)}px`,
   }
 }))
 
@@ -94,22 +100,22 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
         />
       </ListItemIcon>
       {editMode
-        ?  <div>
-            <Formik
-              initialValues={{
-                text: item.text
-              }}
-              validate={values => {
-                const errors: Partial<Values> = {};
-                if (!values.text) errors.text = "Grocery can't be empty";
-                return errors
-              }}
-              onSubmit={values => {
-                editItemText(values.text)
-                setEditMode(false)
-              }}
-              >
-              {({submitForm}) => (
+        ? <div>
+          <Formik
+            initialValues={{
+              text: item.text
+            }}
+            validate={values => {
+              const errors: Partial<Values> = {};
+              if (!values.text) errors.text = "Grocery can't be empty";
+              return errors
+            }}
+            onSubmit={values => {
+              editItemText(values.text)
+              setEditMode(false)
+            }}
+          >
+            {({submitForm}) => (
               <Form>
                 <Field
                   component={TextField}
@@ -118,27 +124,27 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
                 />
                 <ListItemSecondaryAction>
                   <IconButton edge="end" aria-label="save" onClick={submitForm}>
-                    <SaveIcon />
+                    <SaveIcon/>
                   </IconButton>
                   <IconButton edge="end" aria-label="cencel edit" onClick={() => setEditMode(false)}>
-                    <CancelIcon />
+                    <CancelIcon/>
                   </IconButton>
                 </ListItemSecondaryAction>
               </Form>
-                )}
-            </Formik>
-          </div>
+            )}
+          </Formik>
+        </div>
         :
         <div>
-      < ListItemText
-        style={{textDecoration: item.isComplete ? 'line-through' : 'none'}}
-        primary={item.text}
-        />
-      <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="edit" onClick={() => setEditMode(true)}>
-          <EditIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
+          < ListItemText
+            style={{textDecoration: item.isComplete ? 'line-through' : 'none'}}
+            primary={item.text}
+          />
+          <ListItemSecondaryAction>
+            <IconButton edge="end" aria-label="edit" onClick={() => setEditMode(true)}>
+              <EditIcon/>
+            </IconButton>
+          </ListItemSecondaryAction>
         </div>
       }
     </ListItem>
@@ -182,30 +188,30 @@ function App() {
   return (
     <React.Fragment>
       <CssBaseline/>
-      <AppBar position="relative">
+      <AppBar className={classes.appbar}>
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6" color="inherit" noWrap>
             Groceries
           </Typography>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" component="main">
         <Paper>
+          <div className={classes.fab}>
+            <Fab color="primary" aria-label="add">
+              <AddIcon/>
+            </Fab>
+          </div>
           <List>
             <Flip>
-            {todoList.map((todoItem: TodoItem) => (
-              <div key={todoItem.id}>
-                <TodoItem item={todoItem}/>
-                <Divider />
-              </div>
-            ))}
+              {todoList.map((todoItem: TodoItem) => (
+                <div key={todoItem.id}>
+                  <TodoItem item={todoItem}/>
+                  <Divider/>
+                </div>
+              ))}
             </Flip>
           </List>
-          <div className={classes.fab}>
-          <Fab color="primary" aria-label="add">
-            <AddIcon />
-          </Fab>
-          </div>
         </Paper>
       </Container>
     </React.Fragment>
