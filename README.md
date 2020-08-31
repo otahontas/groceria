@@ -1,18 +1,25 @@
 # Groceria
-Plain and simple self-hostable groceries web app, built with react and typescript. This is one those apps, where I couldn't find self-hostable alternative suited for my use-case, so why not create a new app. (Also, shouldn't everyone have a todoapp in their portfolio?).
+Plain and simple self-hostable groceries web app, built with react and typescript. This is one those apps, where I couldn't find self-hostable alternative suited for my spesific use-case, so I decided to write my own. (Also, shouldn't everyone have some sort of todo-app in their portfolio?).
 
 ## Goals
 - SPA with literally only one page, no separate lists, just one list for groceries
 - Saves entries to JSON
 - No separate users
-- Optionally password protection for page
+- Optional password protection 
 - Easy deployment to VPS with Docker
 
-## Usage
-- Installation: yarn install
-- Starting: yarn start
-- Testing: yarn test
-- Building: yarn build
+## Development
+- Install packages with `yarn install`
+- Create db.json -file to `data` folder. You can use `data/sample.json` -file as a base.
+- Run backend-server with `yarn run dev:server`
+- Linting (runs prettier, eslint + some other checks): `yarn lint`, fix errors with `yarn lint:fix`
+
+## TODO:
+- Swipe to delete
+- ErrorBoundary check to app root, don't let program crash
+- Autocomplete based on previous entries (deleted too, so history is needed)
+- undo-redo
+- password protection
 
 ## Licence
 MIT
