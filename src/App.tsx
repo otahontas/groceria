@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   CssBaseline,
   Container,
@@ -15,8 +15,12 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel'
 import EditIcon from '@material-ui/icons/Edit'
 import Flip from "react-tiny-flip";
+import { Formik, Form, Field } from 'formik';
+import { TextField } from 'formik-material-ui';
 
 import {
   atom,
@@ -30,6 +34,9 @@ interface TodoItem {
   isComplete: boolean
 }
 
+type Values = Pick<TodoItem, 'text'>;
+
+
 const useStyles = makeStyles((theme) => ({
   fab: {
     display: "flex", 
@@ -40,16 +47,15 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
   const [todoList, setTodoList] = useRecoilState(todoListState);
+  const [editMode, setEditMode] = useState<boolean>(false)
   const index = todoList.findIndex((listItem) => listItem === item);
 
-  // @ts-ignore
-  const editItemText = ({target: {value}}) => {
+  const editItemText = (text: string) => {
     const newList = replaceItemAtIndex(todoList, index, {
       ...item,
-      text: value,
+      text
     });
 
-    // @ts-ignore
     setTodoList(newList);
   };
 
@@ -60,7 +66,6 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
     });
     newList.sort((a, b) => (a.isComplete === b.isComplete) ? 0 : a.isComplete ? 1 : -1);
 
-    // @ts-ignore
     setTodoList(newList);
   };
 
@@ -81,15 +86,54 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
           disableRipple
         />
       </ListItemIcon>
-      <ListItemText
+      {editMode
+        ?  <div>
+            <Formik
+              initialValues={{
+                text: item.text
+              }}
+              validate={values => {
+                const errors: Partial<Values> = {};
+                if (!values.text) errors.text = "This field can't be empty";
+                return errors
+              }}
+              onSubmit={values => {
+                editItemText(values.text)
+                setEditMode(false)
+              }}
+              >
+              {({submitForm}) => (
+              <Form>
+                <Field
+                  component={TextField}
+                  name="text"
+                  type="text"
+                />
+                <ListItemSecondaryAction>
+                  <IconButton edge="end" aria-label="save" onClick={submitForm}>
+                    <SaveIcon />
+                  </IconButton>
+                  <IconButton edge="end" aria-label="cencel edit" onClick={() => setEditMode(false)}>
+                    <CancelIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </Form>
+                )}
+            </Formik>
+          </div>
+        :
+        <div>
+      < ListItemText
         style={{textDecoration: item.isComplete ? 'line-through' : 'none'}}
         primary={item.text}
-      />
+        />
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="edit">
-          <EditIcon/>
+        <IconButton edge="end" aria-label="edit" onClick={() => setEditMode(true)}>
+          <EditIcon />
         </IconButton>
       </ListItemSecondaryAction>
+        </div>
+      }
     </ListItem>
   );
 }
