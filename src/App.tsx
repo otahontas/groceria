@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  AppBar,
   CssBaseline,
   Container,
   Divider,
@@ -8,10 +9,12 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemSecondaryAction,
+  Toolbar,
   IconButton,
   Paper,
   Fab,
-  Checkbox
+  Checkbox,
+  Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
@@ -38,6 +41,10 @@ type Values = Pick<TodoItem, 'text'>;
 
 
 const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    display: "flex",
+    justifyContent: "center",
+  },
   fab: {
     display: "flex", 
     justifyContent: "flex-end",
@@ -94,7 +101,7 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
               }}
               validate={values => {
                 const errors: Partial<Values> = {};
-                if (!values.text) errors.text = "This field can't be empty";
+                if (!values.text) errors.text = "Grocery can't be empty";
                 return errors
               }}
               onSubmit={values => {
@@ -175,6 +182,13 @@ function App() {
   return (
     <React.Fragment>
       <CssBaseline/>
+      <AppBar position="relative">
+        <Toolbar className={classes.toolbar}>
+          <Typography variant="h6" color="inherit" noWrap>
+            Groceries
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Container maxWidth="sm">
         <Paper>
           <List>
