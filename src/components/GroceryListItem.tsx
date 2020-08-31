@@ -8,29 +8,38 @@ import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
 import { useRecoilState } from "recoil";
 
-import { todoListState } from "../state/atoms";
+import grocecyListService from "../services/grocecyListService";
+import { groceryListState } from "../state/atoms";
 import { Item, ItemFormValues } from "../types";
 
 export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
-  const [todoList, setTodoList] = useRecoilState(todoListState);
+  const [groceryList, setGroceryList] = useRecoilState(groceryListState);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const index = todoList.findIndex(listItem => listItem === item);
+  const index = groceryList.findIndex(listItem => listItem === item);
 
-  const editItem = (text: string) => {
-    const newList = replaceItemAtIndex(todoList, index, {
+  const editItem = async (text: string) => {
+    const newValue = {
       ...item,
       text,
-    });
-    setTodoList(newList);
+    };
+    const response = await grocecyListService.replace(item.id, newValue);
+    if (response.ok) {
+      const newList = replaceItemAtIndex(groceryList, index, newValue);
+      setGroceryList(newList);
+    }
   };
 
-  const toggleItemCompletion = () => {
-    const newList = replaceItemAtIndex(todoList, index, {
+  const toggleItemCompletion = async () => {
+    const newValue = {
       ...item,
       isComplete: !item.isComplete,
-    });
-    newList.sort((a, b) => (a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1));
-    setTodoList(newList);
+    };
+    const response = await grocecyListService.replace(item.id, newValue);
+    if (response.ok) {
+      const newList = replaceItemAtIndex(groceryList, index, newValue);
+      newList.sort((a, b) => (a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1));
+      setGroceryList(newList);
+    }
   };
 
   return (

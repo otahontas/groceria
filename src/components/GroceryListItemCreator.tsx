@@ -9,7 +9,8 @@ import { InputBase } from "formik-material-ui";
 import { useSetRecoilState } from "recoil";
 import { v4 as uuid } from "uuid";
 
-import { todoListState } from "../state/atoms";
+import grocecyListService from "../services/grocecyListService";
+import { groceryListState } from "../state/atoms";
 import { Item, ItemFormValues } from "../types";
 
 const useStyles = makeStyles(theme => ({
@@ -36,15 +37,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggle }) => {
-  const setTodoList = useSetRecoilState(todoListState);
+  const setGroceryList = useSetRecoilState(groceryListState);
   const classes = useStyles();
 
-  const addItem = (todo: Item) => {
-    setTodoList((oldTodoList: Item[]) => {
-      const newList = [...oldTodoList, todo];
-      newList.sort((a, b) => (a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1));
-      return newList;
-    });
+  const addItem = async (todo: Item) => {
+    const response = await grocecyListService.add(todo);
+    if (response.ok) {
+      setGroceryList((oldTodoList: Item[]) => {
+        const newList = [...oldTodoList, todo];
+        newList.sort((a, b) => (a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1));
+        return newList;
+      });
+    }
   };
 
   return (
