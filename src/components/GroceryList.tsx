@@ -50,7 +50,7 @@ export const GroceryList = () => {
       }
     };
     fetchList();
-  }, [setGroceryList, setFetchStatus]);
+  }, [setGroceryList, setFetchStatus, setSnackbarMessage]);
 
   return (
     <Container component="main" maxWidth="sm">

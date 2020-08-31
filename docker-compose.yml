@@ -4,21 +4,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - REACT_APP_BACKEND_URL=http://server
     image: otahontas/groceria
     ports:
       - 80:80
     restart: unless-stopped
     networks:
       - internal
-    depends_on:
-      - json-server
-  json-server:
-    image: clue/json-server
-    restart: unless-stopped
-    networks:
-      - internal
-    volumes:
-      - ./data/db.json:/data/db.json 
 
 networks:
   internal:

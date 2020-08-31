@@ -2,7 +2,8 @@ import { create } from "apisauce";
 
 import { Item } from "../types";
 
-const api = create({ baseURL: "http://localhost:3001/items" });
+const base = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:5000";
+const api = create({ baseURL: `${base}/items` });
 
 const getAll = async () => await api.get<Item[]>("");
 const add = async (item: Item) => await api.post<Item[]>("", item);
