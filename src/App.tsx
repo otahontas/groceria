@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, SyntheticEvent } from "react";
 
 import {
   AppBar,
@@ -11,10 +11,13 @@ import {
   Toolbar,
   Typography,
   CircularProgress,
+  Snackbar,
+  SnackbarCloseReason,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
+import { Alert } from "@material-ui/lab";
 import Flip from "react-tiny-flip";
 import { useRecoilState } from "recoil";
 
@@ -48,6 +51,8 @@ const useStyles = makeStyles(theme => ({
 
 const App: React.FC = () => {
   const [groceryList, setGroceryList] = useRecoilState(groceryListState);
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState("");
   const [showGroceryListItemCreator, setShowGroceryListItemCreator] = useState<boolean>(false);
   const [fetchStatus, setFetchStatus] = useState<"unloaded" | "loading" | "loaded">("unloaded");
   const toggleAddForm = () => setShowGroceryListItemCreator(showAddForm => !showAddForm);
@@ -62,10 +67,21 @@ const App: React.FC = () => {
         setFetchStatus("loaded");
       } else {
         setFetchStatus("unloaded");
+        setMessage("Error happened");
+        setOpen(true);
       }
     };
     fetchList();
   }, [setGroceryList, setFetchStatus]);
+
+  // @ts-ignore
+  const handleClose = (event, reason?: SnackbarCloseReason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <React.Fragment>
@@ -103,6 +119,11 @@ const App: React.FC = () => {
           )}
         </Paper>
       </Container>
+      <Snackbar open={open} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          {message}
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 };
