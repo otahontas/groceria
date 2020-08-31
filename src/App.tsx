@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import { AppBar, Container, CssBaseline, Divider, Fab, List, Paper, Toolbar, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Container,
+  CssBaseline,
+  Divider,
+  Fab,
+  List,
+  Paper,
+  Toolbar,
+  Typography,
+  CircularProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -38,18 +49,23 @@ const useStyles = makeStyles(theme => ({
 const App: React.FC = () => {
   const [groceryList, setGroceryList] = useRecoilState(groceryListState);
   const [showGroceryListItemCreator, setShowGroceryListItemCreator] = useState<boolean>(false);
+  const [fetchStatus, setFetchStatus] = useState<"unloaded" | "loading" | "loaded">("unloaded");
   const toggleAddForm = () => setShowGroceryListItemCreator(showAddForm => !showAddForm);
   const classes = useStyles();
 
   useEffect(() => {
+    setFetchStatus("loading");
     const fetchList = async () => {
       const response = await grocecyListService.getAll();
       if (response.ok && response.data) {
         setGroceryList(response.data);
+        setFetchStatus("loaded");
+      } else {
+        setFetchStatus("unloaded");
       }
     };
     fetchList();
-  }, [setGroceryList]);
+  }, [setGroceryList, setFetchStatus]);
 
   return (
     <React.Fragment>
@@ -67,24 +83,24 @@ const App: React.FC = () => {
             </Fab>
           </div>
           {showGroceryListItemCreator ? <GroceryListItemCreator toggle={toggleAddForm} /> : null}
-          {groceryList ? (
-            groceryList.length === 0 ? (
-              <Container maxWidth="xs" className={classes.infoText}>
-                <Typography align="center">Use the plus icon to add a new list item.</Typography>
-              </Container>
-            ) : (
-              <List>
-                <Flip>
-                  {groceryList.map((item: Item) => (
-                    <div key={item.id}>
-                      <GroceryListItem item={item} />
-                      {item !== groceryList[groceryList.length - 1] && <Divider />}
-                    </div>
-                  ))}
-                </Flip>
-              </List>
-            )
-          ) : null}
+          {fetchStatus === "unloaded" && null}
+          {fetchStatus === "loading" && <CircularProgress color="secondary" />}
+          {fetchStatus === "loaded" && groceryList.length === 0 ? (
+            <Container maxWidth="xs" className={classes.infoText}>
+              <Typography align="center">Use the plus icon to add a new list item.</Typography>
+            </Container>
+          ) : (
+            <List>
+              <Flip>
+                {groceryList.map((item: Item) => (
+                  <div key={item.id}>
+                    <GroceryListItem item={item} />
+                    {item !== groceryList[groceryList.length - 1] && <Divider />}
+                  </div>
+                ))}
+              </Flip>
+            </List>
+          )}
         </Paper>
       </Container>
     </React.Fragment>
