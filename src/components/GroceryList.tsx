@@ -26,6 +26,11 @@ const useStyles = makeStyles(theme => ({
   infoText: {
     padding: theme.spacing(2),
   },
+  loading: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 export const GroceryList = () => {
@@ -62,7 +67,11 @@ export const GroceryList = () => {
         </div>
         {showGroceryListItemCreator ? <GroceryListItemCreator toggle={toggleAddForm} /> : null}
         {fetchStatus === "unloaded" && null}
-        {fetchStatus === "loading" && <CircularProgress color="secondary" />}
+        {fetchStatus === "loading" && (
+          <div className={classes.loading}>
+            <CircularProgress color="secondary" />
+          </div>
+        )}
         {fetchStatus === "loaded" && groceryList.length === 0 ? (
           <Container maxWidth="xs" className={classes.infoText}>
             <Typography align="center">Use the plus icon to add a new list item.</Typography>
