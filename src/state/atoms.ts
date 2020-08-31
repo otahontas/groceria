@@ -8,3 +8,8 @@ export const groceryListState = atom({
   key: "groceryListState",
   default: initialList,
 });
+
+export const snackBarMessageState = atom({
+  key: "snackBarMessageState",
+  default: "",
+});
