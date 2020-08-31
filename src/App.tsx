@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
+import {v4 as uuidv4} from 'uuid';
 import {
+  Box,
   AppBar,
   CssBaseline,
   Container,
@@ -9,30 +11,34 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemSecondaryAction,
+  InputAdornment,
   Toolbar,
   IconButton,
   Paper,
   Fab,
   Checkbox,
-  Typography
+  Typography,
+  FormHelperText
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel'
 import EditIcon from '@material-ui/icons/Edit'
+import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 import Flip from "react-tiny-flip";
 import {Formik, Form, Field} from 'formik';
-import {TextField} from 'formik-material-ui';
+import {TextField, InputBase} from 'formik-material-ui';
 
 import {
   atom,
   useRecoilValue,
   useRecoilState,
+  useSetRecoilState,
 } from 'recoil';
 
 interface TodoItem {
-  id: number,
+  id: string,
   text: string,
   isComplete: boolean
 }
@@ -55,7 +61,27 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     marginTop: `-${theme.spacing(4)}px`,
-  }
+  },
+  addItemContainer: {
+    display: "flex",
+    flexDirection: "column",
+    marginRight: theme.spacing(6),
+    marginLeft: theme.spacing(6),
+  },
+  addItemField: {
+    display: "flex",
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: theme.spacing(1),
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  divider: {
+    height: 28,
+    margin: 4,
+  },
 }))
 
 const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
@@ -68,7 +94,6 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
       ...item,
       text
     });
-
     setTodoList(newList);
   };
 
@@ -78,14 +103,11 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
       isComplete: !item.isComplete,
     });
     newList.sort((a, b) => (a.isComplete === b.isComplete) ? 0 : a.isComplete ? 1 : -1);
-
     setTodoList(newList);
   };
 
   const deleteItem = () => {
     const newList = removeItemAtIndex(todoList, index);
-
-    // @ts-ignore
     setTodoList(newList);
   };
 
@@ -163,53 +185,120 @@ const todoListState = atom({
   key: 'todoListState',
   default: [
     {
-      id: 1,
+      id: uuidv4(),
       text: "Maituli",
       isComplete: false
     },
     {
-      id: 2,
+      id: uuidv4(),
       text: "Saippua",
       isComplete: false
     },
     {
-      id: 3,
+      id: uuidv4(),
       text: "Mehuiza",
       isComplete: false
     }
   ]
 });
 
+function TodoItemCreator() {
+  const setTodoList = useSetRecoilState(todoListState);
+  const classes = useStyles()
+
+  const addItem = (todo: TodoItem) => {
+    setTodoList((oldTodoList: TodoItem[]) => [
+      ...oldTodoList,
+      todo])
+  }
+
+  return (
+    <Formik
+      initialValues={{
+        text: ""
+      }}
+      validate={values => {
+        const errors: Partial<Values> = {};
+        if (!values.text) errors.text = "Grocery can't be empty";
+        return errors
+      }}
+      onSubmit={values => {
+        const todo = {
+          id: uuidv4(),
+          text: values.text,
+          isComplete: false,
+        }
+        addItem(todo)
+      }}
+    >
+      {({submitForm, errors}) => (
+        <div className={classes.addItemContainer}>
+        <Paper component={Form} className={classes.addItemField}>
+          <LocalGroceryStoreIcon/>
+          <Field
+            component={InputBase}
+            name="text"
+            type="text"
+            variant="outlined"
+            fullWidth
+            placeholder="Add new grocery"
+            inputProps={{'aria-label': 'add new grocery'}}
+            className={classes.input}
+          />
+          <Divider orientation="vertical" className={classes.divider}/>
+          <IconButton aria-label="save" onClick={submitForm}>
+            <SaveIcon/>
+          </IconButton>
+        </Paper>
+        { errors.text ? <FormHelperText error>{errors.text}</FormHelperText> : null}
+        </div>
+      )}
+    </Formik>
+  )
+}
 
 function App() {
-  const todoList = useRecoilValue(todoListState)
+  const todoList = useRecoilValue(todoListState);
+  const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <CssBaseline/>
-      <AppBar className={classes.appbar}>
-        <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" color="inherit" noWrap>
+      <AppBar
+        className={classes.appbar}>
+        < Toolbar
+          className={classes.toolbar}>
+          < Typography
+            variant="h6"
+            color="inherit"
+            noWrap>
             Groceries
-          </Typography>
+          </ Typography>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="sm" component="main">
+      <Container
+        maxWidth="sm"
+        component="main">
         <Paper>
-          <div className={classes.fab}>
-            <Fab color="primary" aria-label="add">
+          <div
+            className={classes.fab}>
+            <Fab
+              color="primary"
+              aria-label="add">
               <AddIcon/>
             </Fab>
           </div>
           <List>
             <Flip>
-              {todoList.map((todoItem: TodoItem) => (
-                <div key={todoItem.id}>
-                  <TodoItem item={todoItem}/>
-                  <Divider/>
-                </div>
-              ))}
+              {
+                todoList.map((todoItem: TodoItem) => (
+                  <div key={todoItem.id}>
+                    <TodoItem item={todoItem}/>
+                    {todoItem !== todoList[todoList.length - 1] && <Divider/>}
+                  </div>
+                ))
+              }
             </Flip>
           </List>
         </Paper>
