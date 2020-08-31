@@ -1,12 +1,1 @@
-[{
-    "id": "e3837c0f-83ca-410d-9df9-02ce6c6d3a6d",
-    "text": "Milk and stuff",
-    "isComplete": false
-  },
-  {
-    "id": "905dbbce-1029-4fdd-bda1-d3f5e05541d3",
-    "text": "Good sauce",
-    "isComplete": false
-  }
-]
-
+[{"id": "268cc714-11a0-4309-8a5a-59d09a85abc0", "text": "Juuh", "isComplete": false}, {"id": "a5b66aa7-e517-4ef1-b5a4-0e1cae317679", "text": "Sauce best", "isComplete": false}, {"id": "7436646f-ddc9-4044-991b-87fc77b855e5", "text": "Sauce", "isComplete": false}]
