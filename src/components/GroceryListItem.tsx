@@ -6,13 +6,14 @@ import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import grocecyListService from "../services/grocecyListService";
-import { groceryListState } from "../state/atoms";
+import { groceryListState, snackBarMessageState } from "../state/atoms";
 import { Item, ItemFormValues } from "../types";
 
 export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
+  const setSnackbarMessage = useSetRecoilState(snackBarMessageState);
   const [groceryList, setGroceryList] = useRecoilState(groceryListState);
   const [editMode, setEditMode] = useState<boolean>(false);
   const index = groceryList.findIndex(listItem => listItem === item);
@@ -26,6 +27,8 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
     if (response.ok) {
       const newList = replaceItemAtIndex(groceryList, index, newValue);
       setGroceryList(newList);
+    } else {
+      setSnackbarMessage("Error happened while editing item, please try again");
     }
   };
 
@@ -39,6 +42,8 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
       const newList = replaceItemAtIndex(groceryList, index, newValue);
       newList.sort((a, b) => (a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1));
       setGroceryList(newList);
+    } else {
+      setSnackbarMessage("Error happened while toggling completion status, please try again");
     }
   };
 

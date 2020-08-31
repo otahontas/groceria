@@ -10,7 +10,7 @@ import { useSetRecoilState } from "recoil";
 import { v4 as uuid } from "uuid";
 
 import grocecyListService from "../services/grocecyListService";
-import { groceryListState } from "../state/atoms";
+import { groceryListState, snackBarMessageState } from "../state/atoms";
 import { Item, ItemFormValues } from "../types";
 
 const useStyles = makeStyles(theme => ({
@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggle }) => {
   const setGroceryList = useSetRecoilState(groceryListState);
+  const setSnackbarMessage = useSetRecoilState(snackBarMessageState);
   const classes = useStyles();
 
   const addItem = async (todo: Item) => {
@@ -48,6 +49,8 @@ export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggl
         newList.sort((a, b) => (a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1));
         return newList;
       });
+    } else {
+      setSnackbarMessage("Couldn't add new item, please try again");
     }
   };
 
