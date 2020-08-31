@@ -21,13 +21,14 @@
     "uuid": "^8.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start:ui": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
-    "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'",
-    "server": "cd server && poetry run uvicorn server:app --reload"
+    "lint:ui": "eslint './src/**/*.{ts,tsx}'",
+    "lint:ui:fix": "eslint --fix './src/**/*.{ts,tsx}'",
+    "start:server": "cd server && poetry run uvicorn server:app --reload",
+    "lint:server:fix": "cd server && poetry run black ."
   },
   "eslintConfig": {
     "extends": "react-app"
