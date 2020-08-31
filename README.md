@@ -10,7 +10,6 @@ Plain and simple self-hostable groceries web app, built with react and typescrip
 
 ## Development
 - Install packages with `yarn install`
-- Create db.json -file to `data` folder. You can use `data/sample.json` -file as a base.
 - Run backend-server with `yarn run dev:server`
 - Linting (runs prettier, eslint + some other checks): `yarn lint`, fix errors with `yarn lint:fix`
 
