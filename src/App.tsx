@@ -29,6 +29,9 @@ const useStyles = makeStyles(theme => ({
     transform: "translateY(-50%)",
     marginBottom: `-${theme.spacing(4)}px`,
   },
+  infoText: {
+    padding: theme.spacing(2),
+  },
 }));
 
 const App: React.FC = () => {
@@ -53,16 +56,22 @@ const App: React.FC = () => {
             </Fab>
           </div>
           {showGroceryListItemCreator ? <GroceryListItemCreator toggle={toggleAddForm} /> : null}
-          <List>
-            <Flip>
-              {todoList.map((todoItem: Item) => (
-                <div key={todoItem.id}>
-                  <GroceryListItem item={todoItem} />
-                  {todoItem !== todoList[todoList.length - 1] && <Divider />}
-                </div>
-              ))}
-            </Flip>
-          </List>
+          {todoList.length === 0 ? (
+            <Container maxWidth="xs" className={classes.infoText}>
+              <Typography align="center">Use the plus icon to add a new list item.</Typography>
+            </Container>
+          ) : (
+            <List>
+              <Flip>
+                {todoList.map((todoItem: Item) => (
+                  <div key={todoItem.id}>
+                    <GroceryListItem item={todoItem} />
+                    {todoItem !== todoList[todoList.length - 1] && <Divider />}
+                  </div>
+                ))}
+              </Flip>
+            </List>
+          )}
         </Paper>
       </Container>
     </React.Fragment>
