@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 import {
-  Box,
   AppBar,
   CssBaseline,
   Container,
@@ -11,19 +10,19 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemSecondaryAction,
-  InputAdornment,
+  Grow,
   Toolbar,
   IconButton,
   Paper,
   Fab,
   Checkbox,
   Typography,
-  FormHelperText
+  FormHelperText,
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
-import CancelIcon from '@material-ui/icons/Cancel'
+import CloseIcon from '@material-ui/icons/Close'
 import EditIcon from '@material-ui/icons/Edit'
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 import Flip from "react-tiny-flip";
@@ -149,7 +148,7 @@ const TodoItem: React.FC<{ item: TodoItem }> = ({item}) => {
                     <SaveIcon/>
                   </IconButton>
                   <IconButton edge="end" aria-label="cencel edit" onClick={() => setEditMode(false)}>
-                    <CancelIcon/>
+                    <CloseIcon/>
                   </IconButton>
                 </ListItemSecondaryAction>
               </Form>
@@ -202,7 +201,7 @@ const todoListState = atom({
   ]
 });
 
-function TodoItemCreator() {
+const TodoItemCreator: React.FC<{ toggle: () => void }> = ({toggle}) => {
   const setTodoList = useSetRecoilState(todoListState);
   const classes = useStyles()
 
@@ -229,28 +228,31 @@ function TodoItemCreator() {
           isComplete: false,
         }
         addItem(todo)
+        toggle()
       }}
     >
       {({submitForm, errors}) => (
         <div className={classes.addItemContainer}>
-        <Paper component={Form} className={classes.addItemField}>
-          <LocalGroceryStoreIcon/>
-          <Field
-            component={InputBase}
-            name="text"
-            type="text"
-            variant="outlined"
-            fullWidth
-            placeholder="Add new grocery"
-            inputProps={{'aria-label': 'add new grocery'}}
-            className={classes.input}
-          />
-          <Divider orientation="vertical" className={classes.divider}/>
-          <IconButton aria-label="save" onClick={submitForm}>
-            <SaveIcon/>
-          </IconButton>
-        </Paper>
-        { errors.text ? <FormHelperText error>{errors.text}</FormHelperText> : null}
+          <Grow in>
+            <Paper component={Form} className={classes.addItemField}>
+              <LocalGroceryStoreIcon/>
+              <Field
+                component={InputBase}
+                name="text"
+                type="text"
+                variant="outlined"
+                fullWidth
+                placeholder="Add new grocery"
+                inputProps={{'aria-label': 'add new grocery'}}
+                className={classes.input}
+              />
+              <Divider orientation="vertical" className={classes.divider}/>
+              <IconButton aria-label="save" onClick={submitForm}>
+                <SaveIcon/>
+              </IconButton>
+            </Paper>
+          </Grow>
+          {errors.text ? <FormHelperText error>{errors.text}</FormHelperText> : null}
         </div>
       )}
     </Formik>
@@ -261,6 +263,10 @@ function App() {
   const todoList = useRecoilValue(todoListState);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const classes = useStyles();
+
+  const toggleAddForm = () => {
+    setShowAddForm(showAddForm => !showAddForm)
+  }
 
   return (
     <React.Fragment>
@@ -285,10 +291,13 @@ function App() {
             className={classes.fab}>
             <Fab
               color="primary"
-              aria-label="add">
-              <AddIcon/>
+              aria-label="add"
+              onClick={toggleAddForm}
+            >
+              {showAddForm ? <CloseIcon/> : <AddIcon/>}
             </Fab>
           </div>
+          {showAddForm ? <TodoItemCreator toggle={toggleAddForm}/> : null}
           <List>
             <Flip>
               {
