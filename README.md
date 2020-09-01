@@ -1,6 +1,8 @@
 # Groceria
 Plain and simple self-hostable groceries web app, built with react and typescript. This is one those apps, where I couldn't find self-hostable alternative suited for my spesific use-case, so I decided to write my own. (Also, shouldn't everyone have some sort of todo-app in their portfolio?).
 
+![Screenshot of app frontpage](screenshot.png)
+
 ## Goals
 - SPA with literally only one page, no separate lists, just one list for groceries
 - Saves entries to JSON
