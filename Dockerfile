@@ -1,20 +1,21 @@
 FROM node:14-alpine as build
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package.json ./
 COPY yarn.lock ./
 
 RUN yarn install --frozen-lockfile
 
-COPY . .
+COPY src/ ./src
+COPY public/ ./public
+COPY tsconfig.json .
 
-ARG REACT_APP_BACKEND_URL
-ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
+ENV REACT_APP_API_URL="http://localhost:8000/api/items"
 
 RUN yarn run build
 
 FROM nginx:1.18.0-alpine
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off"]
+CMD ["nginx", "-g", "daemon off;"]

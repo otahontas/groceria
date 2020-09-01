@@ -1,17 +1,27 @@
 version: '3'
 services:
-  groceria:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - REACT_APP_BACKEND_URL=http://server
     image: otahontas/groceria
     ports:
       - 80:80
     restart: unless-stopped
+    depends_on:
+      - server
     networks:
       - internal
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: otahontas/groceria-server
+    restart: unless-stopped
+    networks:
+      - internal
+    ports:
+      - 8000:8000
 
 networks:
   internal:
