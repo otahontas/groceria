@@ -16,6 +16,10 @@ Plain and simple self-hostable groceries web app, built with react and typescrip
 - Linting (runs prettier, eslint + some other checks): `yarn lint`, fix errors with `yarn lint:fix`
 
 ## TODO:
+- Working deployment 
+- Github actions
+- end-to-end tests
+- Running demo somewhere
 - Swipe to delete
 - ErrorBoundary check to app root, don't let program crash
 - Autocomplete based on previous entries (deleted too, so history is needed)
