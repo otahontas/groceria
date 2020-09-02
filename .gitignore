@@ -120,3 +120,6 @@ data/db.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Db file
+db.json
