@@ -5,9 +5,11 @@ from dataclasses import dataclass
 from .config import Item, logger
 import json
 
+
 @dataclass
 class FileIO:
     """Class for file IO."""
+
     db_file: str
 
     async def open_file(self) -> List[Item]:
@@ -22,7 +24,7 @@ class FileIO:
             logger.info("File read returned nothing, returning empty list instead")
             return []
         return json.loads(raw_data)
-    
+
     async def write_file(self, data: List[Item]) -> bool:
         raw_data = json.dumps(data)
         logger.info("Writing to file")

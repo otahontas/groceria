@@ -12,9 +12,11 @@ from .file_io import FileIO
 app = FastAPI()
 io = FileIO(db_file)
 
+
 @app.get("/api/items")
 async def read_items():
     return await io.open_file()
+
 
 @app.post("/api/items")
 async def create_item(item: Item):
@@ -59,9 +61,10 @@ async def delete_item(item_id: str):
             detail="Error happened while saving item",
         )
 
+
 if mode == "production":
     if not spa_location:
-        logger.critical('SPA folder not found, not able to serve frontpage!')
+        logger.critical("SPA folder not found, not able to serve frontpage!")
 
     @app.get("/")
     async def read_items():
