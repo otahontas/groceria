@@ -1,11 +1,19 @@
 import aiofiles
 import json
+import os
+import logging
+
+from fastapi import Request
 from fastapi import FastAPI, HTTPException, status
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import List
 
 app = FastAPI()
 
+logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 class Item(BaseModel):
     id: str
@@ -29,7 +37,6 @@ async def write_file(data: List[Item]) -> bool:
     async with aiofiles.open("db.json", mode="w") as db:
         result = await db.write(raw_data)
     return result == len(raw_data)
-
 
 @app.get("/api/items")
 async def read_items():
@@ -75,3 +82,19 @@ async def delete_item(item_id: str):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Error happened while writing items to file",
         )
+
+
+mode = os.getenv('SERVER_ENV_MODE', "development")
+
+if mode == "production":
+    spa_location = os.environ.get('SERVER_SPA_LOCATION')
+    if not spa_location:
+        logging.error('SPA folder not found, not able to serve frontpage!')
+    templates = Jinja2Templates(directory=spa_location)
+
+
+    @app.get("/")
+    async def read_items():
+        return FileResponse(f"{spa_location}/index.html")
+
+    app.mount("/", StaticFiles(directory=spa_location), name="")
