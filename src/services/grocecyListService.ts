@@ -2,9 +2,7 @@ import { create } from "apisauce";
 
 import { Item } from "../types";
 
-const baseURL = process.env.NODE_ENV === "production" ? process.env.REACT_APP_API_URL : "/api/items";
-console.log(`baseURL is ${baseURL}`);
-const api = create({ baseURL });
+const api = create({ baseURL: "/api/items" });
 
 const getAll = async () => await api.get<Item[]>("");
 const add = async (item: Item) => await api.post<Item[]>("", item);
