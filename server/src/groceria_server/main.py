@@ -15,6 +15,8 @@ app = FastAPI()
 
 logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
+db_file = os.getenv('SERVER_DB_FILE_LOCATION', "db.json")
+
 class Item(BaseModel):
     id: str
     text: str
@@ -23,7 +25,7 @@ class Item(BaseModel):
 
 async def open_file() -> List[Item]:
     try:
-        async with aiofiles.open("db.json", mode="r") as db:
+        async with aiofiles.open(db_file, mode="r") as db:
             raw_data = await db.read()
     except FileNotFoundError:
         return []
@@ -34,7 +36,7 @@ async def open_file() -> List[Item]:
 
 async def write_file(data: List[Item]) -> bool:
     raw_data = json.dumps(data)
-    async with aiofiles.open("db.json", mode="w") as db:
+    async with aiofiles.open(db_file, mode="w") as db:
         result = await db.write(raw_data)
     return result == len(raw_data)
 
