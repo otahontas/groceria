@@ -27,7 +27,7 @@
     "eject": "react-scripts eject",
     "lint:ui": "eslint './src/**/*.{ts,tsx}'",
     "lint:ui:fix": "eslint --fix './src/**/*.{ts,tsx}'",
-    "start:server": "cd server && poetry run uvicorn server:app --reload",
+    "start:server": "cd server && poetry run uvicorn groceria_server.main:app --reload",
     "lint:server:fix": "cd server && poetry run black ."
   },
   "eslintConfig": {
