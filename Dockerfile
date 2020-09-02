@@ -1,3 +1,4 @@
+# Build frontend SPA
 FROM node:14-alpine as build
 
 WORKDIR /app
@@ -11,11 +12,24 @@ COPY src/ ./src
 COPY public/ ./public
 COPY tsconfig.json .
 
-ENV REACT_APP_API_URL="http://localhost:8000/api/items"
-
 RUN yarn run build
 
-FROM nginx:1.18.0-alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Install backend
+FROM python:3.8.5-slim
+
+WORKDIR /app
+
+COPY server/ .
+
+## Install with poetry
+ENV PYTHONPATH=${PYTHONPATH}:${PWD}
+RUN pip3 install poetry && poetry config virtualenvs.create false && poetry install --no-dev
+
+## Set up production mode and copy SPA from build-stage
+ENV SERVER_ENV_MODE=production
+COPY --from=build /app/build /app/build
+ENV SERVER_SPA_LOCATION=/app/build
+
+EXPOSE 8000
+
+CMD ["uvicorn", "groceria_server.main:app", "--host", "0.0.0.0"]

@@ -121,7 +121,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Ignore docker stuff itself
+# Docker files
 .dockerignore
 Dockerfile
 docker-compose.yml
