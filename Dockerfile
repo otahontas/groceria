@@ -29,6 +29,8 @@ RUN pip3 install poetry && poetry config virtualenvs.create false && poetry inst
 ENV SERVER_ENV_MODE=production
 COPY --from=build /app/build /app/build
 ENV SERVER_SPA_LOCATION=/app/build
+RUN touch db.json
+ENV SERVER_DB_FILE_LOCATION=db.json
 
 EXPOSE 8000
 

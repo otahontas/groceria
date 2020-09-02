@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     image: otahontas/groceria
+    volumes:
+      - ./db.json:/app/db.json
     restart: unless-stopped
     networks:
       - proxy

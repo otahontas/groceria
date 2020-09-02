@@ -24,6 +24,7 @@ Plain and simple self-hostable groceries web app, built with react and typescrip
   - e.g. `docker build . -t groceria && docker run -it -p 80:8000 groceria`
 - Uvicorn python server shouldn't be served without proxy in front, so I'll suggest you to add traefik, nginx or whatever you prefer to your setup.
   - See `docker-compose.yml` as an example how to serve app behing traefik
+- All items are saved to `db.json` file inside app root in container. You can mount it with `-v $(pwd)/db.json:/app/db.json` when running.
 
 ## TODO:
 - Github actions
@@ -34,6 +35,7 @@ Plain and simple self-hostable groceries web app, built with react and typescrip
 - Autocomplete based on previous entries (deleted too, so history is needed)
 - undo-redo
 - password protection
+- fix char problems when writing to file (scandics are not written correctly)
 
 ## Licence
 MIT
