@@ -8,6 +8,7 @@ db_file = os.getenv("SERVER_DB_FILE_LOCATION", "db.json")
 mode = os.getenv("SERVER_ENV_MODE", "development")
 spa_location = os.environ.get("SERVER_SPA_LOCATION")
 
+
 # Pydantic models
 class Item(BaseModel):
     id: str

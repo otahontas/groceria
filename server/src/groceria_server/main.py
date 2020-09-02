@@ -1,11 +1,6 @@
-import aiofiles
-import os
-
-from fastapi import Request
 from fastapi import FastAPI, HTTPException, status
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from typing import List
 from .config import db_file, mode, spa_location, Item, logger
 from .file_io import FileIO
 
@@ -67,7 +62,7 @@ if mode == "production":
         logger.critical("SPA folder not found, not able to serve frontpage!")
 
     @app.get("/")
-    async def read_items():
+    async def spa():
         return FileResponse(f"{spa_location}/index.html")
 
     app.mount("/", StaticFiles(directory=spa_location), name="")
