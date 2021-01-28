@@ -26,16 +26,5 @@ Plain and simple self-hostable groceries web app, built with react and typescrip
   - See `docker-compose.yml` as an example how to serve app behing traefik
 - All items are saved to `db.json` file inside app root in container. You can mount it with `-v $(pwd)/db.json:/app/db.json` when running.
 
-## TODO:
-- Github actions
-- end-to-end tests
-- Running demo somewhere
-- Swipe to delete
-- ErrorBoundary check to app root, don't let program crash
-- Autocomplete based on previous entries (deleted too, so history is needed)
-- undo-redo
-- password protection
-- fix char problems when writing to file (scandics are not written correctly)
-
 ## Licence
 MIT
