@@ -28,3 +28,6 @@ Plain and simple self-hostable groceries web app, built with react and typescrip
 
 ## Licence
 MIT
+
+## TODO:
+- Rewrite backend in GO and use style of: https://github.com/dstotijn/golang-nextjs-portable
