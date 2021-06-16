@@ -1,14 +1,12 @@
 # Groceria
-Plain and simple self-hostable groceries web app, built with react and typescript. This is one those apps, where I couldn't find self-hostable alternative suited for my spesific use-case, so I decided to write my own. (Also, shouldn't everyone have some sort of todo-app in their portfolio?).
+
+Plain and simple self-hostable groceries web app, built with react and typescript. 
 
 ![Screenshot of app frontpage](screenshot.png)
 
 ## Goals
-- SPA with literally only one page, no separate lists, just one list for groceries
-- Saves entries to JSON
+- SPA with literally only one page, no separate lists, just the list for groceries
 - No separate users
-- Optional password protection 
-- Easy deployment to VPS with Docker
 
 ## Development
 - Requirements: Yarn, Node 14+, Python 3.8+, Poetry 
@@ -28,6 +26,3 @@ Plain and simple self-hostable groceries web app, built with react and typescrip
 
 ## Licence
 MIT
-
-## TODO:
-- Rewrite backend in GO and use style of: https://github.com/dstotijn/golang-nextjs-portable
