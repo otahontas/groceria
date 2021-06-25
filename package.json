@@ -3,5 +3,14 @@
   "workspaces": [
     "app",
     "server"
-  ]
+  ],
+  "scripts": {
+    "start": "concurrently --kill-others-on-fail 'yarn start:app' 'yarn start:server'",
+    "start:app": "yarn workspace app start",
+    "start:server": "yarn workspace server start",
+    "concurrently": "concurrently"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0"
+  }
 }

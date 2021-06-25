@@ -4,11 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc",
-    "postgraphile": "postgraphile",
-    "dev": "ts-node-dev index.ts",
-    "lint": "eslint --ext .ts .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node-dev index.ts",
+    "lint": "eslint --ext .ts ."
   },
   "keywords": [],
   "author": "",
