@@ -1,5 +1,6 @@
 import express from "express";
 import { postgraphile } from "postgraphile";
+var cors = require("cors");
 require("dotenv").config({ path: "../.env" });
 
 const app = express();
@@ -23,7 +24,8 @@ app.use(
     watchPg: true,
     graphiql: true,
     enhanceGraphiql: true,
-  })
+  }),
+  cors()
 );
 
 app.listen(port, () => {
