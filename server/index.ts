@@ -1,14 +1,31 @@
-import express from 'express';
+import express from "express";
+import { postgraphile } from "postgraphile";
+require("dotenv").config({ path: "../.env" });
+
 const app = express();
+
 app.use(express.json());
 
-const PORT = 3000;
+const groceriaDbUrl = process.env.DATABASE_URL;
+if (!groceriaDbUrl) {
+  console.log("Environmental variable DATABASE_URL can't be empty! Exiting");
+  process.exit(1);
+}
 
-app.get('/ping', (_req, res) => {
-  console.log('someone pinged here');
-  res.send('pong');
-});
+const port = process.env.PORT;
+if (!port) {
+  console.log("Environmental variable PORT can't be empty! Exiting");
+  process.exit(1);
+}
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.use(
+  postgraphile(groceriaDbUrl, "public", {
+    watchPg: true,
+    graphiql: true,
+    enhanceGraphiql: true,
+  })
+);
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });

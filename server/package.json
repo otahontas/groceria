@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
+    "postgraphile": "postgraphile",
     "dev": "ts-node-dev index.ts",
     "lint": "eslint --ext .ts .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +22,8 @@
     "typescript": "^4.3.4"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "postgraphile": "^4.12.3"
   }
 }
