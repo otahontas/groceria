@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import { CircularProgress, Container, Divider, Fab, List, Paper, Typography } from "@material-ui/core";
+import {
+  CircularProgress,
+  Container,
+  Divider,
+  Fab,
+  List,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -14,7 +22,7 @@ import { Item } from "../types";
 import { GroceryListItem } from "./GroceryListItem";
 import { GroceryListItemCreator } from "./GroceryListItemCreator";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   fab: {
     position: "relative",
     zIndex: 2,
@@ -37,11 +45,15 @@ export const GroceryList = () => {
   const [groceryList, setGroceryList] = useRecoilState(groceryListState);
   const setSnackbarMessage = useSetRecoilState(snackBarMessageState);
 
-  const [showGroceryListItemCreator, setShowGroceryListItemCreator] = useState<boolean>(false);
-  const [fetchStatus, setFetchStatus] = useState<"unloaded" | "loading" | "loaded">("unloaded");
+  const [showGroceryListItemCreator, setShowGroceryListItemCreator] =
+    useState<boolean>(false);
+  const [fetchStatus, setFetchStatus] = useState<
+    "unloaded" | "loading" | "loaded"
+  >("unloaded");
 
   const classes = useStyles();
-  const toggleAddForm = () => setShowGroceryListItemCreator(showAddForm => !showAddForm);
+  const toggleAddForm = () =>
+    setShowGroceryListItemCreator((showAddForm) => !showAddForm);
   useEffect(() => {
     setFetchStatus("loading");
     const fetchList = async () => {
@@ -65,7 +77,9 @@ export const GroceryList = () => {
             {showGroceryListItemCreator ? <CloseIcon /> : <AddIcon />}
           </Fab>
         </div>
-        {showGroceryListItemCreator ? <GroceryListItemCreator toggle={toggleAddForm} /> : null}
+        {showGroceryListItemCreator ? (
+          <GroceryListItemCreator toggle={toggleAddForm} />
+        ) : null}
         {fetchStatus === "unloaded" && null}
         {fetchStatus === "loading" && (
           <div className={classes.loading}>
@@ -74,7 +88,9 @@ export const GroceryList = () => {
         )}
         {fetchStatus === "loaded" && groceryList.length === 0 ? (
           <Container maxWidth="xs" className={classes.infoText}>
-            <Typography align="center">Use the plus icon to add a new list item.</Typography>
+            <Typography align="center">
+              Use the plus icon to add a new list item.
+            </Typography>
           </Container>
         ) : (
           <List>

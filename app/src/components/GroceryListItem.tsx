@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 
-import { Checkbox, IconButton, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import {
+  Checkbox,
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditIcon from "@material-ui/icons/Edit";
@@ -17,7 +24,7 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
   const setSnackbarMessage = useSetRecoilState(snackBarMessageState);
   const [groceryList, setGroceryList] = useRecoilState(groceryListState);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const index = groceryList.findIndex(listItem => listItem === item);
+  const index = groceryList.findIndex((listItem) => listItem === item);
 
   const editItem = async (text: string) => {
     const newValue = {
@@ -41,10 +48,14 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
     const response = await grocecyListService.replace(item.id, newValue);
     if (response.ok) {
       const newList = replaceItemAtIndex(groceryList, index, newValue);
-      newList.sort((a, b) => (a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1));
+      newList.sort((a, b) =>
+        a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1
+      );
       setGroceryList(newList);
     } else {
-      setSnackbarMessage("Error happened while toggling completion status, please try again");
+      setSnackbarMessage(
+        "Error happened while toggling completion status, please try again"
+      );
     }
   };
 
@@ -54,14 +65,21 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
       const newList = removeItemAtIndex(groceryList, index);
       setGroceryList(newList);
     } else {
-      setSnackbarMessage("Error happened while toggling deleting item, please try again");
+      setSnackbarMessage(
+        "Error happened while toggling deleting item, please try again"
+      );
     }
   };
 
   return (
     <ListItem>
       <ListItemIcon onClick={toggleItemCompletion}>
-        <Checkbox edge="start" checked={item.isComplete} tabIndex={-1} disableRipple />
+        <Checkbox
+          edge="start"
+          checked={item.isComplete}
+          tabIndex={-1}
+          disableRipple
+        />
       </ListItemIcon>
       {editMode ? (
         <div>
@@ -69,12 +87,12 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
             initialValues={{
               text: item.text,
             }}
-            validate={values => {
+            validate={(values) => {
               const errors: Partial<ItemFormValues> = {};
               if (!values.text) errors.text = "Item can't be empty";
               return errors;
             }}
-            onSubmit={values => {
+            onSubmit={(values) => {
               editItem(values.text);
               setEditMode(false);
             }}
@@ -86,7 +104,11 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
                   <IconButton edge="end" aria-label="save" onClick={submitForm}>
                     <SaveIcon />
                   </IconButton>
-                  <IconButton edge="end" aria-label="cancel edit" onClick={() => setEditMode(false)}>
+                  <IconButton
+                    edge="end"
+                    aria-label="cancel edit"
+                    onClick={() => setEditMode(false)}
+                  >
                     <CloseIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
@@ -96,14 +118,27 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
         </div>
       ) : (
         <div>
-          <ListItemText style={{ textDecoration: item.isComplete ? "line-through" : "none" }} primary={item.text} />
+          <ListItemText
+            style={{
+              textDecoration: item.isComplete ? "line-through" : "none",
+            }}
+            primary={item.text}
+          />
           <ListItemSecondaryAction>
             {item.isComplete ? (
-              <IconButton edge="end" aria-label="edit" onClick={() => deleteItem()}>
+              <IconButton
+                edge="end"
+                aria-label="edit"
+                onClick={() => deleteItem()}
+              >
                 <DeleteForeverIcon />
               </IconButton>
             ) : null}
-            <IconButton edge="end" aria-label="edit" onClick={() => setEditMode(true)}>
+            <IconButton
+              edge="end"
+              aria-label="edit"
+              onClick={() => setEditMode(true)}
+            >
               <EditIcon />
             </IconButton>
           </ListItemSecondaryAction>

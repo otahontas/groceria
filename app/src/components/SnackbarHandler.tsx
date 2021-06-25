@@ -14,7 +14,10 @@ export const SnackBarHandler: React.FC = () => {
     if (snackbarMessage !== "") setOpen(true);
   }, [snackbarMessage]);
 
-  const handleClosing = (_event: React.SyntheticEvent, reason?: SnackbarCloseReason) => {
+  const handleClosing = (
+    _event: React.SyntheticEvent,
+    reason?: SnackbarCloseReason
+  ) => {
     if (reason === "clickaway") return;
     setOpen(false);
   };

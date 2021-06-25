@@ -1,6 +1,12 @@
 import React from "react";
 
-import { Divider, FormHelperText, Grow, IconButton, Paper } from "@material-ui/core";
+import {
+  Divider,
+  FormHelperText,
+  Grow,
+  IconButton,
+  Paper,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LocalGroceryStoreIcon from "@material-ui/icons/LocalGroceryStore";
 import SaveIcon from "@material-ui/icons/Save";
@@ -13,7 +19,7 @@ import grocecyListService from "../services/grocecyListService";
 import { groceryListState, snackBarMessageState } from "../state/atoms";
 import { Item, ItemFormValues } from "../types";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -36,7 +42,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggle }) => {
+export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({
+  toggle,
+}) => {
   const setGroceryList = useSetRecoilState(groceryListState);
   const setSnackbarMessage = useSetRecoilState(snackBarMessageState);
   const classes = useStyles();
@@ -46,7 +54,9 @@ export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggl
     if (response.ok) {
       setGroceryList((oldTodoList: Item[]) => {
         const newList = [...oldTodoList, todo];
-        newList.sort((a, b) => (a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1));
+        newList.sort((a, b) =>
+          a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1
+        );
         return newList;
       });
     } else {
@@ -59,12 +69,12 @@ export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggl
       initialValues={{
         text: "",
       }}
-      validate={values => {
+      validate={(values) => {
         const errors: Partial<ItemFormValues> = {};
         if (!values.text) errors.text = "Item can't be empty";
         return errors;
       }}
-      onSubmit={values => {
+      onSubmit={(values) => {
         const todo = {
           id: uuid(),
           text: values.text,
@@ -95,7 +105,9 @@ export const GroceryListItemCreator: React.FC<{ toggle: () => void }> = ({ toggl
               </IconButton>
             </Paper>
           </Grow>
-          {errors.text ? <FormHelperText error>{errors.text}</FormHelperText> : null}
+          {errors.text ? (
+            <FormHelperText error>{errors.text}</FormHelperText>
+          ) : null}
         </div>
       )}
     </Formik>
