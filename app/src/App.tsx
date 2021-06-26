@@ -19,7 +19,7 @@ const App: React.FC = () => {
       <CssBaseline />
       <Header />
       <Switch>
-        <Route exact path="/grocery-lists/:id">
+        <Route exact path="/grocery-lists/:nodeId">
           <GroceryListView />
         </Route>
         <Route exact path="/">

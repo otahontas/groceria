@@ -9,6 +9,7 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
+import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -17,7 +18,7 @@ import { useSetRecoilState } from "recoil";
 import { snackBarMessageState } from "../state/atoms";
 import { useGroceryListQuery } from "../generated/graphql";
 
-// import { GroceryListItem } from "./GroceryListItem";
+import GroceryListItem from "./GroceryListItem";
 // import { GroceryListItemCreator } from "./GroceryListItemCreator";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 const GroceryListView = () => {
   const classes = useStyles();
   const setSnackbarMessage = useSetRecoilState(snackBarMessageState);
-  const nodeId = "WyJncm9jZXJ5X2xpc3RzIiwyXQ==";
+  const { nodeId } = useParams<{ nodeId: string }>();
   const { data, loading, error } = useGroceryListQuery({
     variables: {
       nodeId: nodeId,
@@ -55,7 +56,7 @@ const GroceryListView = () => {
   const toggleAddForm = () =>
     setShowGroceryListItemCreator((showAddForm) => !showAddForm);
 
-  const groceryList = data?.groceryList?.groceryItemsByGroceryListId?.nodes;
+  const groceryList = data?.groceryList?.groceryItemsByGroceryListId.nodes;
 
   useEffect(() => {
     if (error) {
@@ -64,7 +65,7 @@ const GroceryListView = () => {
   }, [error, setSnackbarMessage]);
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="md">
       <Paper>
         <div className={classes.fab}>
           <Fab aria-label="add" onClick={toggleAddForm}>
@@ -78,11 +79,7 @@ const GroceryListView = () => {
         ) : null}
         {groceryList
           ? groceryList.map((item) =>
-              item ? (
-                <div key={item.nodeId}>
-                  <p>{item.name}</p>
-                </div>
-              ) : null
+              item ? <GroceryListItem key={item.nodeId} item={item} /> : null
             )
           : null}
       </Paper>

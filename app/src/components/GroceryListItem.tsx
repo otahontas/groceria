@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React from "react";
+import { GroceryItem } from "../generated/graphql";
 import {
   Checkbox,
   IconButton,
@@ -8,72 +8,15 @@ import {
   ListItemSecondaryAction,
   ListItemText,
 } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditIcon from "@material-ui/icons/Edit";
-import SaveIcon from "@material-ui/icons/Save";
-import { Field, Form, Formik } from "formik";
-import { TextField } from "formik-material-ui";
-import { useRecoilState, useSetRecoilState } from "recoil";
 
-import grocecyListService from "../services/grocecyListService";
-import { groceryListState, snackBarMessageState } from "../state/atoms";
-import { Item, ItemFormValues } from "../types";
+type Item = Pick<GroceryItem, "name" | "nodeId" | "isComplete">;
 
-export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
-  const setSnackbarMessage = useSetRecoilState(snackBarMessageState);
-  const [groceryList, setGroceryList] = useRecoilState(groceryListState);
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const index = groceryList.findIndex((listItem) => listItem === item);
-
-  const editItem = async (text: string) => {
-    const newValue = {
-      ...item,
-      text,
-    };
-    const response = await grocecyListService.replace(item.id, newValue);
-    if (response.ok) {
-      const newList = replaceItemAtIndex(groceryList, index, newValue);
-      setGroceryList(newList);
-    } else {
-      setSnackbarMessage("Error happened while editing item, please try again");
-    }
-  };
-
-  const toggleItemCompletion = async () => {
-    const newValue = {
-      ...item,
-      isComplete: !item.isComplete,
-    };
-    const response = await grocecyListService.replace(item.id, newValue);
-    if (response.ok) {
-      const newList = replaceItemAtIndex(groceryList, index, newValue);
-      newList.sort((a, b) =>
-        a.isComplete === b.isComplete ? 0 : a.isComplete ? 1 : -1
-      );
-      setGroceryList(newList);
-    } else {
-      setSnackbarMessage(
-        "Error happened while toggling completion status, please try again"
-      );
-    }
-  };
-
-  const deleteItem = async () => {
-    const response = await grocecyListService.remove(item.id);
-    if (response.ok) {
-      const newList = removeItemAtIndex(groceryList, index);
-      setGroceryList(newList);
-    } else {
-      setSnackbarMessage(
-        "Error happened while toggling deleting item, please try again"
-      );
-    }
-  };
-
+const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
   return (
     <ListItem>
-      <ListItemIcon onClick={toggleItemCompletion}>
+      <ListItemIcon>
         <Checkbox
           edge="start"
           checked={item.isComplete}
@@ -81,76 +24,34 @@ export const GroceryListItem: React.FC<{ item: Item }> = ({ item }) => {
           disableRipple
         />
       </ListItemIcon>
-      {editMode ? (
-        <div>
-          <Formik
-            initialValues={{
-              text: item.text,
-            }}
-            validate={(values) => {
-              const errors: Partial<ItemFormValues> = {};
-              if (!values.text) errors.text = "Item can't be empty";
-              return errors;
-            }}
-            onSubmit={(values) => {
-              editItem(values.text);
-              setEditMode(false);
-            }}
-          >
-            {({ submitForm }) => (
-              <Form>
-                <Field component={TextField} name="text" type="text" />
-                <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="save" onClick={submitForm}>
-                    <SaveIcon />
-                  </IconButton>
-                  <IconButton
-                    edge="end"
-                    aria-label="cancel edit"
-                    onClick={() => setEditMode(false)}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      ) : (
-        <div>
-          <ListItemText
-            style={{
-              textDecoration: item.isComplete ? "line-through" : "none",
-            }}
-            primary={item.text}
-          />
-          <ListItemSecondaryAction>
-            {item.isComplete ? (
-              <IconButton
-                edge="end"
-                aria-label="edit"
-                onClick={() => deleteItem()}
-              >
-                <DeleteForeverIcon />
-              </IconButton>
-            ) : null}
+      <div>
+        <ListItemText
+          style={{
+            textDecoration: item.isComplete ? "line-through" : "none",
+          }}
+          primary={item.name}
+        />
+        <ListItemSecondaryAction>
+          {item.isComplete ? (
             <IconButton
               edge="end"
               aria-label="edit"
-              onClick={() => setEditMode(true)}
+              onClick={() => console.log("should delete")}
             >
-              <EditIcon />
+              <DeleteForeverIcon />
             </IconButton>
-          </ListItemSecondaryAction>
-        </div>
-      )}
+          ) : null}
+          <IconButton
+            edge="end"
+            aria-label="edit"
+            onClick={() => console.log("should toggle edit")}
+          >
+            <EditIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </div>
     </ListItem>
   );
 };
 
-function replaceItemAtIndex(arr: Item[], index: number, newValue: Item) {
-  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
-}
-function removeItemAtIndex(arr: Item[], index: number) {
-  return [...arr.slice(0, index), ...arr.slice(index + 1)];
-}
+export default GroceryListItem;
