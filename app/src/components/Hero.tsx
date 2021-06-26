@@ -42,8 +42,9 @@ const Hero: React.FC = () => {
           color="textSecondary"
           component="p"
         >
-          Groceria lets you create shareable grocery lists with a single click of a 
-          button. It supports real-time editing and is easily usable from any platform. 
+          Groceria lets you create shareable grocery lists with a single click
+          of a button. It supports real-time editing and is easily usable from
+          any platform.
         </Typography>
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify="center">
@@ -54,7 +55,7 @@ const Hero: React.FC = () => {
             </Grid>
             <Grid item>
               <Button variant="outlined" color="primary">
-                Read more (not working)  
+                Read more (not working)
               </Button>
             </Grid>
           </Grid>

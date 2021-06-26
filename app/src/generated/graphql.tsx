@@ -1,10 +1,14 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -27,19 +31,19 @@ export type CreateGroceryItemInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The `GroceryItem` to be created by this mutation. */
   groceryItem: GroceryItemInput;
 };
 
 /** The output of our create `GroceryItem` mutation. */
 export type CreateGroceryItemPayload = {
-  __typename?: 'CreateGroceryItemPayload';
+  __typename?: "CreateGroceryItemPayload";
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The `GroceryItem` that was created by this mutation. */
   groceryItem?: Maybe<GroceryItem>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
@@ -49,7 +53,6 @@ export type CreateGroceryItemPayload = {
   /** An edge for our `GroceryItem`. May be used by Relay 1. */
   groceryItemEdge?: Maybe<GroceryItemsEdge>;
 };
-
 
 /** The output of our create `GroceryItem` mutation. */
 export type CreateGroceryItemPayloadGroceryItemEdgeArgs = {
@@ -62,19 +65,19 @@ export type CreateGroceryListInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The `GroceryList` to be created by this mutation. */
   groceryList: GroceryListInput;
 };
 
 /** The output of our create `GroceryList` mutation. */
 export type CreateGroceryListPayload = {
-  __typename?: 'CreateGroceryListPayload';
+  __typename?: "CreateGroceryListPayload";
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The `GroceryList` that was created by this mutation. */
   groceryList?: Maybe<GroceryList>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
@@ -83,13 +86,10 @@ export type CreateGroceryListPayload = {
   groceryListEdge?: Maybe<GroceryListsEdge>;
 };
 
-
 /** The output of our create `GroceryList` mutation. */
 export type CreateGroceryListPayloadGroceryListEdgeArgs = {
   orderBy?: Maybe<Array<GroceryListsOrderBy>>;
 };
-
-
 
 /** All input for the `deleteGroceryItemById` mutation. */
 export type DeleteGroceryItemByIdInput = {
@@ -97,9 +97,9 @@ export type DeleteGroceryItemByIdInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The primary unique identifier for the grocery item */
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
 
 /** All input for the `deleteGroceryItem` mutation. */
@@ -108,22 +108,22 @@ export type DeleteGroceryItemInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The globally unique `ID` which will identify a single `GroceryItem` to be deleted. */
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
 };
 
 /** The output of our delete `GroceryItem` mutation. */
 export type DeleteGroceryItemPayload = {
-  __typename?: 'DeleteGroceryItemPayload';
+  __typename?: "DeleteGroceryItemPayload";
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The `GroceryItem` that was deleted by this mutation. */
   groceryItem?: Maybe<GroceryItem>;
-  deletedGroceryItemId?: Maybe<Scalars['ID']>;
+  deletedGroceryItemId?: Maybe<Scalars["ID"]>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** Reads a single `GroceryList` that is related to this `GroceryItem`. */
@@ -131,7 +131,6 @@ export type DeleteGroceryItemPayload = {
   /** An edge for our `GroceryItem`. May be used by Relay 1. */
   groceryItemEdge?: Maybe<GroceryItemsEdge>;
 };
-
 
 /** The output of our delete `GroceryItem` mutation. */
 export type DeleteGroceryItemPayloadGroceryItemEdgeArgs = {
@@ -144,9 +143,9 @@ export type DeleteGroceryListByIdInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The primary unique identifier for the grocery list */
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
 
 /** All input for the `deleteGroceryList` mutation. */
@@ -155,28 +154,27 @@ export type DeleteGroceryListInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The globally unique `ID` which will identify a single `GroceryList` to be deleted. */
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
 };
 
 /** The output of our delete `GroceryList` mutation. */
 export type DeleteGroceryListPayload = {
-  __typename?: 'DeleteGroceryListPayload';
+  __typename?: "DeleteGroceryListPayload";
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The `GroceryList` that was deleted by this mutation. */
   groceryList?: Maybe<GroceryList>;
-  deletedGroceryListId?: Maybe<Scalars['ID']>;
+  deletedGroceryListId?: Maybe<Scalars["ID"]>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
   /** An edge for our `GroceryList`. May be used by Relay 1. */
   groceryListEdge?: Maybe<GroceryListsEdge>;
 };
-
 
 /** The output of our delete `GroceryList` mutation. */
 export type DeleteGroceryListPayloadGroceryListEdgeArgs = {
@@ -185,19 +183,19 @@ export type DeleteGroceryListPayloadGroceryListEdgeArgs = {
 
 /** Grocery items for grocery lists. */
 export type GroceryItem = Node & {
-  __typename?: 'GroceryItem';
+  __typename?: "GroceryItem";
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
   /** The primary unique identifier for the grocery item */
-  id: Scalars['Int'];
+  id: Scalars["Int"];
   /** The name of the grocery item */
-  name: Scalars['String'];
+  name: Scalars["String"];
   /** The status implicating whether grocery item is active or not */
-  isComplete: Scalars['Boolean'];
+  isComplete: Scalars["Boolean"];
   /** Time when grocery item was originally created */
-  createdDate: Scalars['Datetime'];
+  createdDate: Scalars["Datetime"];
   /** Id of the grocery list the grocery item belongs to */
-  groceryListId: Scalars['Int'];
+  groceryListId: Scalars["Int"];
   /** Reads a single `GroceryList` that is related to this `GroceryItem`. */
   groceryListByGroceryListId?: Maybe<GroceryList>;
 };
@@ -208,38 +206,38 @@ export type GroceryItem = Node & {
  */
 export type GroceryItemCondition = {
   /** Checks for equality with the object’s `id` field. */
-  id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars["Int"]>;
   /** Checks for equality with the object’s `name` field. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars["String"]>;
   /** Checks for equality with the object’s `isComplete` field. */
-  isComplete?: Maybe<Scalars['Boolean']>;
+  isComplete?: Maybe<Scalars["Boolean"]>;
   /** Checks for equality with the object’s `createdDate` field. */
-  createdDate?: Maybe<Scalars['Datetime']>;
+  createdDate?: Maybe<Scalars["Datetime"]>;
   /** Checks for equality with the object’s `groceryListId` field. */
-  groceryListId?: Maybe<Scalars['Int']>;
+  groceryListId?: Maybe<Scalars["Int"]>;
 };
 
 /** An input for mutations affecting `GroceryItem` */
 export type GroceryItemInput = {
   /** The name of the grocery item */
-  name: Scalars['String'];
+  name: Scalars["String"];
   /** The status implicating whether grocery item is active or not */
-  isComplete?: Maybe<Scalars['Boolean']>;
+  isComplete?: Maybe<Scalars["Boolean"]>;
   /** Id of the grocery list the grocery item belongs to */
-  groceryListId: Scalars['Int'];
+  groceryListId: Scalars["Int"];
 };
 
 /** Represents an update to a `GroceryItem`. Fields that are set will be updated. */
 export type GroceryItemPatch = {
   /** The name of the grocery item */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars["String"]>;
   /** The status implicating whether grocery item is active or not */
-  isComplete?: Maybe<Scalars['Boolean']>;
+  isComplete?: Maybe<Scalars["Boolean"]>;
 };
 
 /** A connection to a list of `GroceryItem` values. */
 export type GroceryItemsConnection = {
-  __typename?: 'GroceryItemsConnection';
+  __typename?: "GroceryItemsConnection";
   /** A list of `GroceryItem` objects. */
   nodes: Array<Maybe<GroceryItem>>;
   /** A list of edges which contains the `GroceryItem` and cursor to aid in pagination. */
@@ -247,58 +245,57 @@ export type GroceryItemsConnection = {
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** The count of *all* `GroceryItem` you could get from the connection. */
-  totalCount: Scalars['Int'];
+  totalCount: Scalars["Int"];
 };
 
 /** A `GroceryItem` edge in the connection. */
 export type GroceryItemsEdge = {
-  __typename?: 'GroceryItemsEdge';
+  __typename?: "GroceryItemsEdge";
   /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']>;
+  cursor?: Maybe<Scalars["Cursor"]>;
   /** The `GroceryItem` at the end of the edge. */
   node?: Maybe<GroceryItem>;
 };
 
 /** Methods to use when ordering `GroceryItem`. */
 export enum GroceryItemsOrderBy {
-  Natural = 'NATURAL',
-  IdAsc = 'ID_ASC',
-  IdDesc = 'ID_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  IsCompleteAsc = 'IS_COMPLETE_ASC',
-  IsCompleteDesc = 'IS_COMPLETE_DESC',
-  CreatedDateAsc = 'CREATED_DATE_ASC',
-  CreatedDateDesc = 'CREATED_DATE_DESC',
-  GroceryListIdAsc = 'GROCERY_LIST_ID_ASC',
-  GroceryListIdDesc = 'GROCERY_LIST_ID_DESC',
-  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  Natural = "NATURAL",
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+  NameAsc = "NAME_ASC",
+  NameDesc = "NAME_DESC",
+  IsCompleteAsc = "IS_COMPLETE_ASC",
+  IsCompleteDesc = "IS_COMPLETE_DESC",
+  CreatedDateAsc = "CREATED_DATE_ASC",
+  CreatedDateDesc = "CREATED_DATE_DESC",
+  GroceryListIdAsc = "GROCERY_LIST_ID_ASC",
+  GroceryListIdDesc = "GROCERY_LIST_ID_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC",
 }
 
 /** Grocery lists. */
 export type GroceryList = Node & {
-  __typename?: 'GroceryList';
+  __typename?: "GroceryList";
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
   /** The primary unique identifier for the grocery list */
-  id: Scalars['Int'];
+  id: Scalars["Int"];
   /** The name of the grocery list */
-  name: Scalars['String'];
+  name: Scalars["String"];
   /** Time when grocery list was originally created */
-  createdDate: Scalars['Datetime'];
+  createdDate: Scalars["Datetime"];
   /** Reads and enables pagination through a set of `GroceryItem`. */
   groceryItemsByGroceryListId: GroceryItemsConnection;
 };
 
-
 /** Grocery lists. */
 export type GroceryListGroceryItemsByGroceryListIdArgs = {
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['Cursor']>;
-  after?: Maybe<Scalars['Cursor']>;
+  first?: Maybe<Scalars["Int"]>;
+  last?: Maybe<Scalars["Int"]>;
+  offset?: Maybe<Scalars["Int"]>;
+  before?: Maybe<Scalars["Cursor"]>;
+  after?: Maybe<Scalars["Cursor"]>;
   orderBy?: Maybe<Array<GroceryItemsOrderBy>>;
   condition?: Maybe<GroceryItemCondition>;
 };
@@ -309,28 +306,28 @@ export type GroceryListGroceryItemsByGroceryListIdArgs = {
  */
 export type GroceryListCondition = {
   /** Checks for equality with the object’s `id` field. */
-  id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars["Int"]>;
   /** Checks for equality with the object’s `name` field. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars["String"]>;
   /** Checks for equality with the object’s `createdDate` field. */
-  createdDate?: Maybe<Scalars['Datetime']>;
+  createdDate?: Maybe<Scalars["Datetime"]>;
 };
 
 /** An input for mutations affecting `GroceryList` */
 export type GroceryListInput = {
   /** The name of the grocery list */
-  name: Scalars['String'];
+  name: Scalars["String"];
 };
 
 /** Represents an update to a `GroceryList`. Fields that are set will be updated. */
 export type GroceryListPatch = {
   /** The name of the grocery list */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars["String"]>;
 };
 
 /** A connection to a list of `GroceryList` values. */
 export type GroceryListsConnection = {
-  __typename?: 'GroceryListsConnection';
+  __typename?: "GroceryListsConnection";
   /** A list of `GroceryList` objects. */
   nodes: Array<Maybe<GroceryList>>;
   /** A list of edges which contains the `GroceryList` and cursor to aid in pagination. */
@@ -338,34 +335,34 @@ export type GroceryListsConnection = {
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
   /** The count of *all* `GroceryList` you could get from the connection. */
-  totalCount: Scalars['Int'];
+  totalCount: Scalars["Int"];
 };
 
 /** A `GroceryList` edge in the connection. */
 export type GroceryListsEdge = {
-  __typename?: 'GroceryListsEdge';
+  __typename?: "GroceryListsEdge";
   /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']>;
+  cursor?: Maybe<Scalars["Cursor"]>;
   /** The `GroceryList` at the end of the edge. */
   node?: Maybe<GroceryList>;
 };
 
 /** Methods to use when ordering `GroceryList`. */
 export enum GroceryListsOrderBy {
-  Natural = 'NATURAL',
-  IdAsc = 'ID_ASC',
-  IdDesc = 'ID_DESC',
-  NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC',
-  CreatedDateAsc = 'CREATED_DATE_ASC',
-  CreatedDateDesc = 'CREATED_DATE_DESC',
-  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  Natural = "NATURAL",
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+  NameAsc = "NAME_ASC",
+  NameDesc = "NAME_DESC",
+  CreatedDateAsc = "CREATED_DATE_ASC",
+  CreatedDateDesc = "CREATED_DATE_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC",
 }
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   /** Creates a single `GroceryItem`. */
   createGroceryItem?: Maybe<CreateGroceryItemPayload>;
   /** Creates a single `GroceryList`. */
@@ -388,60 +385,50 @@ export type Mutation = {
   deleteGroceryListById?: Maybe<DeleteGroceryListPayload>;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateGroceryItemArgs = {
   input: CreateGroceryItemInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateGroceryListArgs = {
   input: CreateGroceryListInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateGroceryItemArgs = {
   input: UpdateGroceryItemInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateGroceryItemByIdArgs = {
   input: UpdateGroceryItemByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateGroceryListArgs = {
   input: UpdateGroceryListInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateGroceryListByIdArgs = {
   input: UpdateGroceryListByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteGroceryItemArgs = {
   input: DeleteGroceryItemInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteGroceryItemByIdArgs = {
   input: DeleteGroceryItemByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteGroceryListArgs = {
   input: DeleteGroceryListInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteGroceryListByIdArgs = {
@@ -451,32 +438,32 @@ export type MutationDeleteGroceryListByIdArgs = {
 /** An object with a globally unique `ID`. */
 export type Node = {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
 };
 
 /** Information about pagination in a connection. */
 export type PageInfo = {
-  __typename?: 'PageInfo';
+  __typename?: "PageInfo";
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars["Boolean"];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars["Boolean"];
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['Cursor']>;
+  startCursor?: Maybe<Scalars["Cursor"]>;
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['Cursor']>;
+  endCursor?: Maybe<Scalars["Cursor"]>;
 };
 
 /** The root query type which gives access points into the data universe. */
 export type Query = Node & {
-  __typename?: 'Query';
+  __typename?: "Query";
   /**
    * Exposes the root query type nested one level down. This is helpful for Relay 1
    * which can only query top level fields if they are in a particular form.
    */
   query: Query;
   /** The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`. */
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
   /** Fetches an object given its globally unique `ID`. */
   node?: Maybe<Node>;
   /** Reads and enables pagination through a set of `GroceryItem`. */
@@ -491,58 +478,51 @@ export type Query = Node & {
   groceryList?: Maybe<GroceryList>;
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryNodeArgs = {
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryAllGroceryItemsArgs = {
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['Cursor']>;
-  after?: Maybe<Scalars['Cursor']>;
+  first?: Maybe<Scalars["Int"]>;
+  last?: Maybe<Scalars["Int"]>;
+  offset?: Maybe<Scalars["Int"]>;
+  before?: Maybe<Scalars["Cursor"]>;
+  after?: Maybe<Scalars["Cursor"]>;
   orderBy?: Maybe<Array<GroceryItemsOrderBy>>;
   condition?: Maybe<GroceryItemCondition>;
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryAllGroceryListsArgs = {
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['Cursor']>;
-  after?: Maybe<Scalars['Cursor']>;
+  first?: Maybe<Scalars["Int"]>;
+  last?: Maybe<Scalars["Int"]>;
+  offset?: Maybe<Scalars["Int"]>;
+  before?: Maybe<Scalars["Cursor"]>;
+  after?: Maybe<Scalars["Cursor"]>;
   orderBy?: Maybe<Array<GroceryListsOrderBy>>;
   condition?: Maybe<GroceryListCondition>;
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryGroceryItemByIdArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryGroceryListByIdArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryGroceryItemArgs = {
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryGroceryListArgs = {
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
 };
 
 /** All input for the `updateGroceryItemById` mutation. */
@@ -551,11 +531,11 @@ export type UpdateGroceryItemByIdInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** An object where the defined keys will be set on the `GroceryItem` being updated. */
   groceryItemPatch: GroceryItemPatch;
   /** The primary unique identifier for the grocery item */
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
 
 /** All input for the `updateGroceryItem` mutation. */
@@ -564,21 +544,21 @@ export type UpdateGroceryItemInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The globally unique `ID` which will identify a single `GroceryItem` to be updated. */
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
   /** An object where the defined keys will be set on the `GroceryItem` being updated. */
   groceryItemPatch: GroceryItemPatch;
 };
 
 /** The output of our update `GroceryItem` mutation. */
 export type UpdateGroceryItemPayload = {
-  __typename?: 'UpdateGroceryItemPayload';
+  __typename?: "UpdateGroceryItemPayload";
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The `GroceryItem` that was updated by this mutation. */
   groceryItem?: Maybe<GroceryItem>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
@@ -588,7 +568,6 @@ export type UpdateGroceryItemPayload = {
   /** An edge for our `GroceryItem`. May be used by Relay 1. */
   groceryItemEdge?: Maybe<GroceryItemsEdge>;
 };
-
 
 /** The output of our update `GroceryItem` mutation. */
 export type UpdateGroceryItemPayloadGroceryItemEdgeArgs = {
@@ -601,11 +580,11 @@ export type UpdateGroceryListByIdInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** An object where the defined keys will be set on the `GroceryList` being updated. */
   groceryListPatch: GroceryListPatch;
   /** The primary unique identifier for the grocery list */
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
 
 /** All input for the `updateGroceryList` mutation. */
@@ -614,21 +593,21 @@ export type UpdateGroceryListInput = {
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The globally unique `ID` which will identify a single `GroceryList` to be updated. */
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
   /** An object where the defined keys will be set on the `GroceryList` being updated. */
   groceryListPatch: GroceryListPatch;
 };
 
 /** The output of our update `GroceryList` mutation. */
 export type UpdateGroceryListPayload = {
-  __typename?: 'UpdateGroceryListPayload';
+  __typename?: "UpdateGroceryListPayload";
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars["String"]>;
   /** The `GroceryList` that was updated by this mutation. */
   groceryList?: Maybe<GroceryList>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
@@ -637,48 +616,49 @@ export type UpdateGroceryListPayload = {
   groceryListEdge?: Maybe<GroceryListsEdge>;
 };
 
-
 /** The output of our update `GroceryList` mutation. */
 export type UpdateGroceryListPayloadGroceryListEdgeArgs = {
   orderBy?: Maybe<Array<GroceryListsOrderBy>>;
 };
 
 export type GroceryListQueryVariables = Exact<{
-  nodeId: Scalars['ID'];
+  nodeId: Scalars["ID"];
 }>;
 
-
-export type GroceryListQuery = (
-  { __typename?: 'Query' }
-  & { groceryList?: Maybe<(
-    { __typename?: 'GroceryList' }
-    & Pick<GroceryList, 'name' | 'id'>
-    & { groceryItemsByGroceryListId: (
-      { __typename?: 'GroceryItemsConnection' }
-      & { nodes: Array<Maybe<(
-        { __typename?: 'GroceryItem' }
-        & Pick<GroceryItem, 'isComplete' | 'name' | 'nodeId'>
-      )>> }
-    ) }
-  )> }
-);
-
+export type GroceryListQuery = { __typename?: "Query" } & {
+  groceryList?: Maybe<
+    { __typename?: "GroceryList" } & Pick<GroceryList, "name" | "id"> & {
+        groceryItemsByGroceryListId: {
+          __typename?: "GroceryItemsConnection";
+        } & {
+          nodes: Array<
+            Maybe<
+              { __typename?: "GroceryItem" } & Pick<
+                GroceryItem,
+                "isComplete" | "name" | "nodeId"
+              >
+            >
+          >;
+        };
+      }
+  >;
+};
 
 export const GroceryListDocument = gql`
-    query groceryList($nodeId: ID!) {
-  groceryList(nodeId: $nodeId) {
-    name
-    id
-    groceryItemsByGroceryListId {
-      nodes {
-        isComplete
-        name
-        nodeId
+  query groceryList($nodeId: ID!) {
+    groceryList(nodeId: $nodeId) {
+      name
+      id
+      groceryItemsByGroceryListId {
+        nodes {
+          isComplete
+          name
+          nodeId
+        }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGroceryListQuery__
@@ -696,14 +676,35 @@ export const GroceryListDocument = gql`
  *   },
  * });
  */
-export function useGroceryListQuery(baseOptions: Apollo.QueryHookOptions<GroceryListQuery, GroceryListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GroceryListQuery, GroceryListQueryVariables>(GroceryListDocument, options);
-      }
-export function useGroceryListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroceryListQuery, GroceryListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GroceryListQuery, GroceryListQueryVariables>(GroceryListDocument, options);
-        }
+export function useGroceryListQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GroceryListQuery,
+    GroceryListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GroceryListQuery, GroceryListQueryVariables>(
+    GroceryListDocument,
+    options
+  );
+}
+export function useGroceryListLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GroceryListQuery,
+    GroceryListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GroceryListQuery, GroceryListQueryVariables>(
+    GroceryListDocument,
+    options
+  );
+}
 export type GroceryListQueryHookResult = ReturnType<typeof useGroceryListQuery>;
-export type GroceryListLazyQueryHookResult = ReturnType<typeof useGroceryListLazyQuery>;
-export type GroceryListQueryResult = Apollo.QueryResult<GroceryListQuery, GroceryListQueryVariables>;
+export type GroceryListLazyQueryHookResult = ReturnType<
+  typeof useGroceryListLazyQuery
+>;
+export type GroceryListQueryResult = Apollo.QueryResult<
+  GroceryListQuery,
+  GroceryListQueryVariables
+>;

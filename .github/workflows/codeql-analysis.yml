@@ -2,9 +2,9 @@ name: "CodeQL"
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
   schedule:
-    - cron: '37 23 * * 3'
+    - cron: "37 23 * * 3"
 
 jobs:
   analyze:
@@ -14,19 +14,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'python' ]
+        language: ["javascript", "python"]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: ${{ matrix.language }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: ${{ matrix.language }}
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1

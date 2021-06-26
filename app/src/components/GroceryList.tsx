@@ -12,12 +12,12 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
-// import grocecyListService from "../services/grocecyListService";
 import { snackBarMessageState } from "../state/atoms";
+import { useGroceryListQuery, GroceryList } from "../generated/graphql";
 
-//import { GroceryListItem } from "./GroceryListItem";
+// import { GroceryListItem } from "./GroceryListItem";
 // import { GroceryListItemCreator } from "./GroceryListItemCreator";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,36 +36,34 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    padding: theme.spacing(2),
   },
 }));
 
-const GroceryList = () => {
-  // const [groceryList, setGroceryList] = useRecoilState(groceryListState);
+const GroceryListView = () => {
   const setSnackbarMessage = useSetRecoilState(snackBarMessageState);
-
+  const nodeId = "WyJncm9jZXJ5X2xpc3RzIiwyXQ==";
+  const { data, loading, error } = useGroceryListQuery({
+    variables: {
+      nodeId: nodeId,
+    },
+  });
   const [showGroceryListItemCreator, setShowGroceryListItemCreator] =
     useState<boolean>(false);
-  // const [fetchStatus, setFetchStatus] = useState<
-  //   "unloaded" | "loading" | "loaded"
-  // >("unloaded");
-
   const classes = useStyles();
+
   const toggleAddForm = () =>
     setShowGroceryListItemCreator((showAddForm) => !showAddForm);
-  // useEffect(() => {
-  //   setFetchStatus("loading");
-  //   const fetchList = async () => {
-  //     const response = await grocecyListService.getAll();
-  //     if (response.ok && response.data) {
-  //       setGroceryList(response.data);
-  //       setFetchStatus("loaded");
-  //     } else {
-  //       setFetchStatus("unloaded");
-  //       setSnackbarMessage("Couldn't load items, please try again");
-  //     }
-  //   };
-  //   fetchList();
-  // }, [setGroceryList, setFetchStatus, setSnackbarMessage]);
+
+  useEffect(() => {
+    if (error) {
+      setSnackbarMessage("Couldn't load groceries, please try again");
+    }
+    // if (data?.groceryList == null) {
+    //   setSnackbarMessage(`No grocery list with id ${nodeId}, please try again`);
+    //   console.log(data)
+    // }
+  }, [data, loading, error, setSnackbarMessage]);
 
   return (
     <Container component="main" maxWidth="sm">
@@ -75,38 +73,37 @@ const GroceryList = () => {
             {showGroceryListItemCreator ? <CloseIcon /> : <AddIcon />}
           </Fab>
         </div>
+        {loading ? (
+          <div className={classes.loading}>
+            <CircularProgress color="secondary" />
+          </div>
+        ) : null}
       </Paper>
     </Container>
   );
 };
 
-export default GroceryList;
-        // {showGroceryListItemCreator ? (
-        //   <GroceryListItemCreator toggle={toggleAddForm} />
-        // ) : null}
+export default GroceryListView;
+// {showGroceryListItemCreator ? (
+//   <GroceryListItemCreator toggle={toggleAddForm} />
+// ) : null}
 
-
-        // {fetchStatus === "unloaded" && null}
-        // {fetchStatus === "loading" && (
-        //   <div className={classes.loading}>
-        //     <CircularProgress color="secondary" />
-        //   </div>
-        // )}
-        // {fetchStatus === "loaded" && groceryList.length === 0 ? (
-        //   <Container maxWidth="xs" className={classes.infoText}>
-        //     <Typography align="center">
-        //       Use the plus icon to add a new list item.
-        //     </Typography>
-        //   </Container>
-        // ) : (
-        //   <List>
-        //     <Flip>
-        //       {groceryList.map((item: Item) => (
-        //         <div key={item.id}>
-        //           <GroceryListItem item={item} />
-        //           {item !== groceryList[groceryList.length - 1] && <Divider />}
-        //         </div>
-        //       ))}
-        //     </Flip>
-        //   </List>
-        // )}
+// {fetchStatus === "unloaded" && null}
+// {fetchStatus === "loaded" && groceryList.length === 0 ? (
+//   <Container maxWidth="xs" className={classes.infoText}>
+//     <Typography align="center">
+//       Use the plus icon to add a new list item.
+//     </Typography>
+//   </Container>
+// ) : (
+//   <List>
+//     <Flip>
+//       {groceryList.map((item: Item) => (
+//         <div key={item.id}>
+//           <GroceryListItem item={item} />
+//           {item !== groceryList[groceryList.length - 1] && <Divider />}
+//         </div>
+//       ))}
+//     </Flip>
+//   </List>
+// )}
