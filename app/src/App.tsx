@@ -6,10 +6,12 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect
 } from "react-router-dom";
 
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import GroceryList from "./components/GroceryList";
 
 const App: React.FC = () => {
 
@@ -18,9 +20,13 @@ const App: React.FC = () => {
       <CssBaseline />
       <Header />
       <Switch>
+        <Route exact path="/grocery-lists/:id"> 
+          <GroceryList />
+        </Route>
         <Route exact path="/">
           <Hero />
         </Route>
+        <Redirect to="/" />
       </Switch>
       <SnackBarHandler />
     </Router>
