@@ -6,22 +6,21 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import GroceryList from "./components/GroceryList";
+import GroceryListView from "./components/GroceryList";
 
 const App: React.FC = () => {
-
   return (
     <Router>
       <CssBaseline />
       <Header />
       <Switch>
-        <Route exact path="/grocery-lists/:id"> 
-          <GroceryList />
+        <Route exact path="/grocery-lists/:id">
+          <GroceryListView />
         </Route>
         <Route exact path="/">
           <Hero />
