@@ -2,6 +2,11 @@ import React from "react";
 
 import { CssBaseline } from "@material-ui/core";
 import { SnackBarHandler } from "./components/SnackbarHandler";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -9,12 +14,16 @@ import Hero from "./components/Hero";
 const App: React.FC = () => {
 
   return (
-    <React.Fragment>
+    <Router>
       <CssBaseline />
       <Header />
-      <Hero />
+      <Switch>
+        <Route exact path="/">
+          <Hero />
+        </Route>
+      </Switch>
       <SnackBarHandler />
-    </React.Fragment>
+    </Router>
   );
 };
 
