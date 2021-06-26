@@ -15,7 +15,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { useSetRecoilState } from "recoil";
 
 import { snackBarMessageState } from "../state/atoms";
-import { useGroceryListQuery, GroceryList } from "../generated/graphql";
+import { useGroceryListQuery } from "../generated/graphql";
 
 // import { GroceryListItem } from "./GroceryListItem";
 // import { GroceryListItemCreator } from "./GroceryListItemCreator";
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GroceryListView = () => {
+  const classes = useStyles();
   const setSnackbarMessage = useSetRecoilState(snackBarMessageState);
   const nodeId = "WyJncm9jZXJ5X2xpc3RzIiwyXQ==";
   const { data, loading, error } = useGroceryListQuery({
@@ -50,20 +51,17 @@ const GroceryListView = () => {
   });
   const [showGroceryListItemCreator, setShowGroceryListItemCreator] =
     useState<boolean>(false);
-  const classes = useStyles();
 
   const toggleAddForm = () =>
     setShowGroceryListItemCreator((showAddForm) => !showAddForm);
+
+  const groceryList = data?.groceryList?.groceryItemsByGroceryListId?.nodes;
 
   useEffect(() => {
     if (error) {
       setSnackbarMessage("Couldn't load groceries, please try again");
     }
-    // if (data?.groceryList == null) {
-    //   setSnackbarMessage(`No grocery list with id ${nodeId}, please try again`);
-    //   console.log(data)
-    // }
-  }, [data, loading, error, setSnackbarMessage]);
+  }, [error, setSnackbarMessage]);
 
   return (
     <Container component="main" maxWidth="sm">
@@ -78,6 +76,15 @@ const GroceryListView = () => {
             <CircularProgress color="secondary" />
           </div>
         ) : null}
+        {groceryList
+          ? groceryList.map((item) =>
+              item ? (
+                <div key={item.nodeId}>
+                  <p>{item.name}</p>
+                </div>
+              ) : null
+            )
+          : null}
       </Paper>
     </Container>
   );
@@ -88,7 +95,6 @@ export default GroceryListView;
 //   <GroceryListItemCreator toggle={toggleAddForm} />
 // ) : null}
 
-// {fetchStatus === "unloaded" && null}
 // {fetchStatus === "loaded" && groceryList.length === 0 ? (
 //   <Container maxWidth="xs" className={classes.infoText}>
 //     <Typography align="center">
@@ -97,7 +103,10 @@ export default GroceryListView;
 //   </Container>
 // ) : (
 //   <List>
-//     <Flip>
+// )}
+//
+//
+// const GroceryListContainer = ({groceryList: GroceryItem[]}) => {
 //       {groceryList.map((item: Item) => (
 //         <div key={item.id}>
 //           <GroceryListItem item={item} />
@@ -106,4 +115,4 @@ export default GroceryListView;
 //       ))}
 //     </Flip>
 //   </List>
-// )}
+// }
